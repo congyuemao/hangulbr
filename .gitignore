@@ -1,18 +1,27 @@
+# Local reference repositories
+references/
+
 # Configs
-.env*
+.env
+.env.*
+!.env.example
 
 # Keys
 id_*
+
+# Dependencies
+node_modules/
 
 # Compiled output
 packages/*/.types/
 root/public/assets/
 root/lib/
-
-# Other
-node_modules/
+dist/
 build/
 out/
+coverage/
+
+# Other
 tmp/
 sandbox/
 .vscode/

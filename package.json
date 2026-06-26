@@ -1,14 +1,15 @@
 {
   "private": true,
-  "name": "keybr.com",
+  "name": "hangul-typing-trainer",
+  "description": "Open-source Korean dubeolsik typing trainer derived from keybr.com.",
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://www.keybr.com",
-  "license": "GPL-3",
-  "author": "Aliaksandr Radzivanovich <aradzivanovich@gmail.com>",
+  "homepage": "https://github.com/your-org/hangul-typing-trainer",
+  "license": "AGPL-3.0-only",
+  "author": "Hangul Typing Trainer contributors",
   "repository": {
     "type": "git",
-    "url": "git@github.com:aradzie/keybr.com.git"
+    "url": "git@github.com:your-org/hangul-typing-trainer.git"
   },
   "workspaces": [
     "packages/*",
@@ -26,11 +27,11 @@
     "stylelint": "stylelint '{**/*,*}.{less,css}'",
     "stylelint-fix": "stylelint '{**/*,*}.{less,css}' --fix",
     "format": "prettier '{**/*,*}.{js,ts,tsx,less,css}' --write",
-    "build": "env NODE_ENV=production webpack",
-    "build-dev": "env NODE_ENV=development webpack",
-    "watch": "env NODE_ENV=development webpack --watch",
-    "start": "env NODE_ENV=development node --enable-source-maps ./root/index.js",
-    "start-docker": "env NODE_ENV=production ./packages/devenv/lib/initdb.ts && env NODE_ENV=production node --enable-source-maps ./root/index.js"
+    "build": "cross-env NODE_ENV=production webpack",
+    "build-dev": "cross-env NODE_ENV=development webpack",
+    "watch": "cross-env NODE_ENV=development webpack --watch",
+    "start": "cross-env NODE_ENV=development node --enable-source-maps ./root/index.js",
+    "start-docker": "cross-env NODE_ENV=production ./packages/devenv/lib/initdb.ts && cross-env NODE_ENV=production node --enable-source-maps ./root/index.js"
   },
   "dependencies": {
     "@fastr/client": "^0.1.3",
@@ -85,6 +86,7 @@
     "cheerio": "^1.2.0",
     "compression-webpack-plugin": "^12.0.0",
     "confusing-browser-globals": "^1.0.11",
+    "cross-env": "^7.0.3",
     "css-loader": "^7.1.4",
     "css-minimizer-webpack-plugin": "^8.0.0",
     "eslint": "^9.39.4",
