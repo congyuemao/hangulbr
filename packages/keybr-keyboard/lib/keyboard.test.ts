@@ -6,6 +6,7 @@ import { KeyCharacters } from "./keycharacters.ts";
 import { KeyCombo } from "./keycombo.ts";
 import { KeyModifier } from "./keymodifier.ts";
 import { Layout } from "./layout.ts";
+import { loadKeyboard } from "./load.ts";
 import { type CharacterDict, type GeometryDict } from "./types.ts";
 
 test("data", () => {
@@ -153,4 +154,31 @@ test("data", () => {
   deepEqual(keyboard.zones.get("leftIndex"), [shapeKeyA, shapeKeyB]);
   deepEqual(keyboard.zones.get("rightIndex"), [shapeEqual]);
   equal(keyboard.zones.get("home"), undefined);
+});
+
+test("korean dubeolsik layout", () => {
+  const keyboard = loadKeyboard(Layout.KO_KR);
+
+  equal(keyboard.layout, Layout.KO_KR);
+  equal(keyboard.geometry, Geometry.KOREAN_103);
+  equal(
+    keyboard.getCharacters("KeyQ")!.getCodePoint(KeyModifier.None),
+    /* HANGUL LETTER PIEUP */ 0x3142,
+  );
+  equal(
+    keyboard.getCharacters("KeyQ")!.getCodePoint(KeyModifier.Shift),
+    /* HANGUL LETTER SSANGPIEUP */ 0x3143,
+  );
+  equal(
+    keyboard.getCharacters("KeyK")!.getCodePoint(KeyModifier.None),
+    /* HANGUL LETTER A */ 0x314f,
+  );
+  equal(
+    keyboard.getCharacters("KeyO")!.getCodePoint(KeyModifier.Shift),
+    /* HANGUL LETTER YAE */ 0x3152,
+  );
+  deepEqual(
+    keyboard.getCombo(/* HANGUL LETTER A */ 0x314f),
+    new KeyCombo(/* HANGUL LETTER A */ 0x314f, "KeyK", KeyModifier.None),
+  );
 });

@@ -17,6 +17,10 @@ test("find layout", () => {
   equal(Layout.findLayout("fr-FR"), Layout.FR_FR);
   equal(Layout.findLayout("fr-CA"), Layout.FR_CA);
   equal(Layout.findLayout("fr-XX"), Layout.FR_FR);
+
+  equal(Layout.findLayout("ko"), Layout.KO_KR);
+  equal(Layout.findLayout("ko-KR"), Layout.KO_KR);
+  equal(Layout.findLayout("ko-XX"), Layout.KO_KR);
 });
 
 test("find layouts for all languages", () => {

@@ -20,7 +20,7 @@ export type KeyProps = {
 } & MouseProps;
 
 export function makeKeyComponent(
-  { letterName }: Language,
+  { letterName, script }: Language,
   shape: KeyShape,
 ): FunctionComponent<KeyProps> {
   const { isCodePoint, isDead, isLigature } = KeyCharacters;
@@ -92,6 +92,19 @@ export function makeKeyComponent(
   }
   if (isLigature(d)) {
     children.push(makeLigatureLabel(d, 25, 12, styles.secondarySymbol));
+  }
+  const latinHint = getLatinKeyHint(script, id);
+  if (latinHint != null) {
+    children.push(
+      makeLabel(
+        {
+          text: latinHint,
+          pos: [w - 9, 20],
+          align: ["m", "m"],
+        },
+        styles.latinHintSymbol,
+      ),
+    );
   }
   const zoneClassName = zoneClassNameOf(shape);
   function KeyComponent({
@@ -177,6 +190,14 @@ export function makeKeyComponent(
       clsx(className, styles.ligatureSymbol),
     );
   }
+}
+
+function getLatinKeyHint(script: Language["script"], id: string): string | null {
+  if (script !== "hangul") {
+    return null;
+  }
+  const match = /^Key([A-Z])$/.exec(id);
+  return match?.[1] ?? null;
 }
 
 function makeLabel(label: LabelShape, className: ClassName = null): ReactNode {

@@ -3,7 +3,7 @@ import { Settings } from "@keybr/settings";
 import { ViewSwitch } from "@keybr/widget";
 import { views } from "./views.tsx";
 
-setDefaultLayout(window.navigator.language);
+setDefaultLayout("ko-KR");
 
 function setDefaultLayout(localeId: string) {
   const layout = Layout.findLayout(localeId);

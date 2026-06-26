@@ -66,6 +66,37 @@ test("letter labels", () => {
   r.unmount();
 });
 
+test("hangul key labels with latin hint", () => {
+  // Arrange.
+
+  const shape = new KeyShape(
+    "KeyQ",
+    {
+      x: 0,
+      y: 0,
+      w: 1,
+      h: 1,
+    },
+    [
+      /* HANGUL LETTER PIEUP */ 0x3142,
+      /* HANGUL LETTER SSANGPIEUP */ 0x3143,
+    ],
+  );
+
+  const Key = makeKeyComponent(Language.KO, shape);
+
+  // Act.
+
+  const r = render(<Key />);
+
+  // Assert.
+
+  equal(r.container.textContent, "ㅂㅃQ");
+  equal(r.container.querySelectorAll('[data-key="KeyQ"]').length, 1);
+
+  r.unmount();
+});
+
 test("dead labels", () => {
   // Arrange.
 

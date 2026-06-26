@@ -438,6 +438,23 @@ export class Layout implements XEnumItem {
       Geometry.MATRIX,
     ),
   );
+  static readonly KO_KR = new Layout(
+    /* id= */ "ko-kr",
+    /* xid= */ 0xb2,
+    /* name= */ "{KR} Dubeolsik",
+    /* family= */ "dubeolsik",
+    /* language= */ Language.KO,
+    /* emulate= */ true,
+    /* geometries= */ new Enum(
+      Geometry.KOREAN_103,
+      Geometry.KOREAN_103_FULL,
+      Geometry.ANSI_101,
+      Geometry.ANSI_101_FULL,
+      Geometry.ISO_102,
+      Geometry.ISO_102_FULL,
+      Geometry.MATRIX,
+    ),
+  );
   static readonly LT_LT = new Layout(
     /* id= */ "lt-lt",
     /* xid= */ 0x48,
@@ -1429,6 +1446,7 @@ export class Layout implements XEnumItem {
     Layout.HU_HU,
     Layout.IT_IT,
     // Layout.JA_JP,
+    Layout.KO_KR,
     Layout.LT_LT,
     Layout.LV_LV,
     Layout.NB_NO,

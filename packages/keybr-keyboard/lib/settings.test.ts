@@ -9,18 +9,18 @@ import { KeyboardOptions, keyboardProps } from "./settings.ts";
 test("use default settings", () => {
   const options = KeyboardOptions.default();
 
-  equal(options.language, Language.EN);
-  equal(options.layout, Layout.EN_US);
-  equal(options.geometry, Geometry.ANSI_101);
+  equal(options.language, Language.KO);
+  equal(options.layout, Layout.KO_KR);
+  equal(options.geometry, Geometry.KOREAN_103);
   equal(options.zones, ZoneMod.STANDARD);
 });
 
 test("read default settings", () => {
   const options = KeyboardOptions.from(new Settings());
 
-  equal(options.language, Language.EN);
-  equal(options.layout, Layout.EN_US);
-  equal(options.geometry, Geometry.ANSI_101);
+  equal(options.language, Language.KO);
+  equal(options.layout, Layout.KO_KR);
+  equal(options.geometry, Geometry.KOREAN_103);
   equal(options.zones, ZoneMod.STANDARD);
 });
 

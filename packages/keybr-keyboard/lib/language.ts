@@ -116,6 +116,12 @@ export class Language implements EnumItem {
     /* direction= */ "ltr",
     /* alphabet= */ "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんがぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽぁぃぇぉゃゅょっー",
   );
+  static readonly KO = new Language(
+    /* id= */ "ko",
+    /* script= */ "hangul",
+    /* direction= */ "ltr",
+    /* alphabet= */ "ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔㅁㄴㅇㄹㅎㅗㅓㅏㅣㅋㅌㅊㅍㅠㅜㅡㅃㅉㄸㄲㅆㅒㅖ",
+  );
   static readonly LT = new Language(
     /* id= */ "lt",
     /* script= */ "latin",
@@ -221,6 +227,7 @@ export class Language implements EnumItem {
     Language.HU,
     Language.IT,
     // Language.JA,
+    Language.KO,
     Language.LT,
     Language.LV,
     Language.NB,
@@ -244,6 +251,7 @@ export class Language implements EnumItem {
     | "arabic"
     | "cyrillic"
     | "greek"
+    | "hangul"
     | "hebrew"
     | "hiragana"
     | "latin"
@@ -271,6 +279,7 @@ export class Language implements EnumItem {
       | "arabic"
       | "cyrillic"
       | "greek"
+      | "hangul"
       | "hebrew"
       | "hiragana"
       | "latin"
@@ -361,6 +370,11 @@ export class Language implements EnumItem {
         return codePoint >= 0x0400 && codePoint <= 0x04ff;
       case "greek":
         return codePoint >= 0x0370 && codePoint <= 0x03ff;
+      case "hangul":
+        return (
+          (codePoint >= 0x3130 && codePoint <= 0x318f) ||
+          (codePoint >= 0xac00 && codePoint <= 0xd7af)
+        );
       case "hebrew":
         return codePoint >= 0x0590 && codePoint <= 0x05ff;
       case "latin":
@@ -399,6 +413,8 @@ export function getExampleText({ script }: Language): string {
       return "Яжте повече ябълки и портокали.";
     case "greek":
       return "Τρώτε περισσότερα μήλα και πορτοκάλια.";
+    case "hangul":
+      return "한글 두벌식 자판을 연습합니다.";
     case "hebrew":
       return "תאכל יותר תפוחים ותפוזים.";
     case "hiragana":
@@ -418,6 +434,8 @@ export function getExampleLetters({ script }: Language): CodePoint[] {
       return [0x0430, 0x0431, 0x0432, 0x0433, 0x0434, 0x0435];
     case "greek":
       return [0x03b1, 0x03b2, 0x03b3, 0x03b4, 0x03b5, 0x03b6];
+    case "hangul":
+      return [0x3142, 0x3148, 0x3137, 0x3131, 0x3145, 0x314f];
     case "hebrew":
       return [0x05d0, 0x05d1, 0x05d2, 0x05d3, 0x05d4, 0x05d5];
     case "hiragana":

@@ -3,7 +3,7 @@ import { type CSSProperties } from "react";
 export type FontWeight = "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900";
 export type FontStyle = "normal" | "italic";
 export type Fallback = "cursive" | "fantasy" | "monospace" | "sans-serif" | "serif" | "whitespace" | string;
-export type Script = "arabic" | "cyrillic" | "greek" | "hebrew" | "hiragana" | "katakana" | "latin" | "thai";
+export type Script = "arabic" | "cyrillic" | "greek" | "hangul" | "hebrew" | "hiragana" | "katakana" | "latin" | "thai";
 
 export class FontFace {
   readonly family: string;
@@ -39,8 +39,9 @@ const cl = ["cyrillic", "latin"] as const satisfies Script[];
 const cgl = ["cyrillic", "greek", "latin"] as const satisfies Script[];
 const cghl = ["cyrillic", "greek", "hebrew", "latin"] as const satisfies Script[];
 const achl = ["arabic", "cyrillic", "hebrew", "latin"] as const satisfies Script[];
-const acghlt = ["arabic", "cyrillic", "greek", "hebrew", "latin", "thai"] as const satisfies Script[];
+const acghhlt = ["arabic", "cyrillic", "greek", "hangul", "hebrew", "latin", "thai"] as const satisfies Script[];
 const hiragana = ["hiragana"] as const satisfies Script[];
+const cjk = ["hangul", "hiragana"] as const satisfies Script[];
 
 export const ARAD = new FontFace("Arad", "400", "normal", ["whitespace"], ["arabic"]);
 export const ARAD_B = new FontFace("Arad", "700", "normal", ["whitespace"], ["arabic"]);
@@ -52,10 +53,10 @@ export const NEWSREADER = new FontFace("Newsreader", "400", "normal", ["serif"],
 export const NEWSREADER_I = new FontFace("Newsreader", "400", "italic", ["serif"], ["latin"]);
 export const NEWSREADER_B = new FontFace("Newsreader", "700", "normal", ["serif"], ["latin"]);
 export const NEWSREADER_BI = new FontFace("Newsreader", "700", "italic", ["serif"], ["latin"]);
-export const NOTO_SANS_JP = new FontFace("Noto Sans JP", "400", "normal", ["sans-serif"], hiragana);
-export const NOTO_SANS_JP_B = new FontFace("Noto Sans JP", "700", "normal", ["sans-serif"], hiragana);
-export const NOTO_SERIF_JP = new FontFace("Noto Serif JP", "400", "normal", ["serif"], hiragana);
-export const NOTO_SERIF_JP_B = new FontFace("Noto Serif JP", "700", "normal", ["serif"], hiragana);
+export const NOTO_SANS_JP = new FontFace("Noto Sans JP", "400", "normal", ["sans-serif"], cjk);
+export const NOTO_SANS_JP_B = new FontFace("Noto Sans JP", "700", "normal", ["sans-serif"], cjk);
+export const NOTO_SERIF_JP = new FontFace("Noto Serif JP", "400", "normal", ["serif"], cjk);
+export const NOTO_SERIF_JP_B = new FontFace("Noto Serif JP", "700", "normal", ["serif"], cjk);
 export const NUNITO = new FontFace("Nunito", "400", "normal", ["sans-serif"], cl);
 export const NUNITO_I = new FontFace("Nunito", "400", "italic", ["sans-serif"], cl);
 export const NUNITO_B = new FontFace("Nunito", "700", "normal", ["sans-serif"], cl);
@@ -98,22 +99,22 @@ export const UBUNTU_MONO = new FontFace("Ubuntu Mono", "400", "normal", ["monosp
 export const UBUNTU_MONO_I = new FontFace("Ubuntu Mono", "400", "italic", ["monospace"], cgl);
 export const UBUNTU_MONO_B = new FontFace("Ubuntu Mono", "700", "normal", ["monospace"], cgl);
 export const UBUNTU_MONO_BI = new FontFace("Ubuntu Mono", "700", "italic", ["monospace"], cgl);
-export const SERIF = new FontFace("serif", "400", "normal", ["whitespace"], acghlt);
-export const SERIF_I = new FontFace("serif", "400", "italic", ["whitespace"], acghlt);
-export const SERIF_B = new FontFace("serif", "700", "normal", ["whitespace"], acghlt);
-export const SERIF_BI = new FontFace("serif", "700", "italic", ["whitespace"], acghlt);
-export const SANS_SERIF = new FontFace("sans-serif", "400", "normal", ["whitespace"], acghlt);
-export const SANS_SERIF_I = new FontFace("sans-serif", "400", "italic", ["whitespace"], acghlt);
-export const SANS_SERIF_B = new FontFace("sans-serif", "700", "normal", ["whitespace"], acghlt);
-export const SANS_SERIF_BI = new FontFace("sans-serif", "700", "italic", ["whitespace"], acghlt);
-export const MONOSPACE = new FontFace("monospace", "400", "normal", ["whitespace"], acghlt);
-export const MONOSPACE_I = new FontFace("monospace", "400", "italic", ["whitespace"], acghlt);
-export const MONOSPACE_B = new FontFace("monospace", "700", "normal", ["whitespace"], acghlt);
-export const MONOSPACE_BI = new FontFace("monospace", "700", "italic", ["whitespace"], acghlt);
-export const CURSIVE = new FontFace("cursive", "400", "normal", ["whitespace"], acghlt);
-export const CURSIVE_I = new FontFace("cursive", "400", "italic", ["whitespace"], acghlt);
-export const CURSIVE_B = new FontFace("cursive", "700", "normal", ["whitespace"], acghlt);
-export const CURSIVE_BI = new FontFace("cursive", "700", "italic", ["whitespace"], acghlt);
+export const SERIF = new FontFace("serif", "400", "normal", ["whitespace"], acghhlt);
+export const SERIF_I = new FontFace("serif", "400", "italic", ["whitespace"], acghhlt);
+export const SERIF_B = new FontFace("serif", "700", "normal", ["whitespace"], acghhlt);
+export const SERIF_BI = new FontFace("serif", "700", "italic", ["whitespace"], acghhlt);
+export const SANS_SERIF = new FontFace("sans-serif", "400", "normal", ["whitespace"], acghhlt);
+export const SANS_SERIF_I = new FontFace("sans-serif", "400", "italic", ["whitespace"], acghhlt);
+export const SANS_SERIF_B = new FontFace("sans-serif", "700", "normal", ["whitespace"], acghhlt);
+export const SANS_SERIF_BI = new FontFace("sans-serif", "700", "italic", ["whitespace"], acghhlt);
+export const MONOSPACE = new FontFace("monospace", "400", "normal", ["whitespace"], acghhlt);
+export const MONOSPACE_I = new FontFace("monospace", "400", "italic", ["whitespace"], acghhlt);
+export const MONOSPACE_B = new FontFace("monospace", "700", "normal", ["whitespace"], acghhlt);
+export const MONOSPACE_BI = new FontFace("monospace", "700", "italic", ["whitespace"], acghhlt);
+export const CURSIVE = new FontFace("cursive", "400", "normal", ["whitespace"], acghhlt);
+export const CURSIVE_I = new FontFace("cursive", "400", "italic", ["whitespace"], acghhlt);
+export const CURSIVE_B = new FontFace("cursive", "700", "normal", ["whitespace"], acghhlt);
+export const CURSIVE_BI = new FontFace("cursive", "700", "italic", ["whitespace"], acghhlt);
 
 export const FONTS_FACES: readonly FontFace[] = [
   ARAD,

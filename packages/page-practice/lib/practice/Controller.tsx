@@ -1,8 +1,14 @@
 import { type KeyId, useKeyboard } from "@keybr/keyboard";
 import { type Result } from "@keybr/result";
-import { type LineList } from "@keybr/textinput";
-import { addKey, deleteKey, emulateLayout } from "@keybr/textinput-events";
+import { type LineList, type TextInput } from "@keybr/textinput";
+import {
+  addKey,
+  deleteKey,
+  emulateLayout,
+  HangulIme,
+} from "@keybr/textinput-events";
 import { makeSoundPlayer } from "@keybr/textinput-sounds";
+import { type CodePoint } from "@keybr/unicode";
 import {
   useDocumentEvent,
   useHotkeys,
@@ -71,22 +77,25 @@ function useLessonState(
 
   return useMemo(() => {
     // New lesson.
-    const state = new LessonState(progress, (result, textInput) => {
+    const state = new LessonState(progress, (result, textInput, steps) => {
       setKey(key + 1);
-      lastLessonRef.current = makeLastLesson(result, textInput.steps);
+      lastLessonRef.current = makeLastLesson(result, steps);
       onResultRef.current(result);
     });
     state.lastLesson = lastLessonRef.current;
+    const hangulIme = keyboard.layout.id === "ko-kr" ? new HangulIme() : null;
     setLines(state.lines);
     setDepressedKeys(state.depressedKeys);
     const handleResetLesson = () => {
       state.resetLesson();
+      hangulIme?.reset();
       setLines(state.lines);
       setDepressedKeys((state.depressedKeys = []));
       timeout.cancel();
     };
     const handleSkipLesson = () => {
       state.skipLesson();
+      hangulIme?.reset();
       setLines(state.lines);
       setDepressedKeys((state.depressedKeys = []));
       timeout.cancel();
@@ -108,9 +117,21 @@ function useLessonState(
         },
         onInput: (event) => {
           state.lastLesson = null;
-          const feedback = state.onInput(event);
-          setLines(state.lines);
-          playSounds(feedback);
+          if (hangulIme != null) {
+            const result = hangulIme.consume(event, expectedCodePoint(state.textInput));
+            for (const ev of result.events) {
+              const feedback =
+                result.jamoEvents.length > 0
+                  ? state.onHangulInput(ev, result.jamoEvents)
+                  : state.onInput(ev);
+              playSounds(feedback);
+            }
+            setLines(state.lines);
+          } else {
+            const feedback = state.onInput(event);
+            setLines(state.lines);
+            playSounds(feedback);
+          }
           timeout.schedule(handleResetLesson, 10000);
         },
       },
@@ -124,4 +145,11 @@ function useLessonState(
       handleInput: onInput,
     };
   }, [progress, keyboard, timeout, key]);
+}
+
+function expectedCodePoint(textInput: TextInput): CodePoint | null {
+  if (textInput.completed) {
+    return null;
+  }
+  return textInput.at(textInput.pos).codePoint as CodePoint;
 }
