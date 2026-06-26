@@ -30,6 +30,7 @@
 - `docs/code-structure-analysis.md`
 - `docs/stage-01-initial-build.md`
 - `docs/stage-02-dubeolsik-layout.md`
+- `docs/stage-03-hangul-composition.md`
 - `docs/korean-input-design.md`
 
 ## English
@@ -68,4 +69,5 @@ Working notes:
 - `docs/code-structure-analysis.md`
 - `docs/stage-01-initial-build.md`
 - `docs/stage-02-dubeolsik-layout.md`
+- `docs/stage-03-hangul-composition.md`
 - `docs/korean-input-design.md`
