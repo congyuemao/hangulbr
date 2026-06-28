@@ -6,12 +6,13 @@
 `keybr.com` 的自适应打字训练架构进行二次开发，并参考 `kanabr` 的
 语言专项改造方式。
 
-当前阶段是二段式布局初步接入：
+当前阶段是韩语二段式布局、Hangul 组合层和真实词典的初步接入：
 
 - 已把 `keybr.com` 源码导入为根项目代码基线。
 - 已把两个参考仓库保留在 `references/` 下，作为本地对照资料。
 - 已注册韩语 `ko` 语言、韩国常用二段式 `ko-kr` 键盘布局和可视化键帽标签。
-- 当前练习仍以二段式 jamo/键位为分析单位；完整 Hangul 组合输入与真实韩语语料还在后续阶段。
+- 已加入 Hangul 组合/拆分层：页面显示正常韩文，输入与统计仍按二段式 jamo/键位展开。
+- 已生成 5000 条韩语词典词表，并在练习页为已命中的词添加鼠标悬浮释义。
 
 参考仓库：
 
@@ -31,6 +32,7 @@
 - `docs/stage-01-initial-build.md`
 - `docs/stage-02-dubeolsik-layout.md`
 - `docs/stage-03-hangul-composition.md`
+- `docs/stage-04-korean-dictionary.md`
 - `docs/korean-input-design.md`
 
 ## English
@@ -39,15 +41,18 @@ This is an open-source Korean typing trainer for Chinese learners of Korean. It
 is derived mainly from the adaptive typing architecture of `keybr.com`, with
 `kanabr` used as a reference for language-specific adaptation.
 
-Current phase: initial dubeolsik layout integration.
+Current phase: initial dubeolsik layout, Hangul composition, and real Korean
+dictionary integration.
 
 - The `keybr.com` source tree has been imported as the root code baseline.
 - The two reference repositories remain under `references/` for local
   comparison.
 - Korean `ko`, the common Korean dubeolsik `ko-kr` layout, and visual keycap
   labels are now registered.
-- Practice analysis is still jamo/key-based. Full Hangul composition and real
-  Korean corpora are planned for later stages.
+- Hangul composition/decomposition is now wired in: the page displays normal
+  Korean text, while input handling and stats still expand to dubeolsik jamo.
+- A 5000-entry Korean dictionary-backed word list has been generated, and
+  matched practice words now expose hover definitions.
 
 Reference repositories:
 
@@ -70,4 +75,5 @@ Working notes:
 - `docs/stage-01-initial-build.md`
 - `docs/stage-02-dubeolsik-layout.md`
 - `docs/stage-03-hangul-composition.md`
+- `docs/stage-04-korean-dictionary.md`
 - `docs/korean-input-design.md`
