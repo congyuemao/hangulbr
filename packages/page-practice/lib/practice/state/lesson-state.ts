@@ -1,4 +1,8 @@
 import {
+  findKoreanDictionaryEntry,
+  formatKoreanDictionaryTooltip,
+} from "@keybr/content-words";
+import {
   composeHangulText,
   hangulKeystream,
   keyboardProps,
@@ -19,6 +23,7 @@ import {
 import { type Settings } from "@keybr/settings";
 import {
   type Feedback,
+  flattenStyledText,
   type LineList,
   makeStats,
   type Step,
@@ -103,10 +108,7 @@ export class LessonState {
     return this.#resultSteps ?? this.textInput.steps;
   }
 
-  #onInput(
-    event: IInputEvent,
-    jamoEvents: readonly IInputEvent[],
-  ): Feedback {
+  #onInput(event: IInputEvent, jamoEvents: readonly IInputEvent[]): Feedback {
     const previousStepCount = this.textInput.steps.length;
     const feedback = this.textInput.onInput(event);
     this.#recordResultSteps(previousStepCount, jamoEvents);
@@ -119,7 +121,9 @@ export class LessonState {
   }
 
   #reset(fragment: StyledText) {
-    const text = this.#hangulEnabled() ? composeHangulStyledText(fragment) : fragment;
+    const text = this.#hangulEnabled()
+      ? annotateKoreanStyledText(composeHangulStyledText(fragment))
+      : fragment;
     this.textInput = new TextInput(text, this.textInputSettings);
     this.lines = this.textInput.lines;
     this.suffix = this.#remainingCodePoints();
@@ -159,7 +163,9 @@ export class LessonState {
   }
 
   #remainingCodePoints(): CodePoint[] {
-    const codePoints = this.textInput.remaining.map(({ codePoint }) => codePoint);
+    const codePoints = this.textInput.remaining.map(
+      ({ codePoint }) => codePoint,
+    );
     return this.#hangulEnabled() ? hangulKeystream(codePoints) : codePoints;
   }
 
@@ -187,4 +193,23 @@ function composeHangulStyledText(text: StyledText): StyledText {
     ...text,
     text: composeHangulText((text as StyledTextSpan).text),
   };
+}
+
+function annotateKoreanStyledText(text: StyledText): StyledText {
+  const value = flattenStyledText(text);
+  const parts = value.split(/(\s+)/u);
+  return parts.map((part): StyledText => {
+    if (part === "" || /^\s+$/u.test(part)) {
+      return part;
+    }
+    const entry = findKoreanDictionaryEntry(part);
+    if (entry == null) {
+      return part;
+    }
+    return {
+      text: part,
+      cls: "",
+      title: formatKoreanDictionaryTooltip(entry),
+    };
+  });
 }

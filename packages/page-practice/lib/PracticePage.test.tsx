@@ -1,14 +1,17 @@
 import { test } from "node:test";
 import { FakeIntlProvider } from "@keybr/intl";
+import { KeyboardOptions, Language } from "@keybr/keyboard";
 import { type PageData, PageDataContext } from "@keybr/pages-shared";
 import { FakePhoneticModel } from "@keybr/phonetic-model";
 import { PhoneticModelLoader } from "@keybr/phonetic-model-loader";
 import { FakeResultContext, ResultFaker } from "@keybr/result";
-import { FakeSettingsContext } from "@keybr/settings";
+import { FakeSettingsContext, Settings } from "@keybr/settings";
 import { fireEvent, render } from "@testing-library/react";
 import { PracticePage } from "./PracticePage.tsx";
 
 const faker = new ResultFaker();
+const englishSettings = () =>
+  KeyboardOptions.default().withLanguage(Language.EN).save(new Settings());
 
 test("render", async () => {
   PhoneticModelLoader.loader = FakePhoneticModel.loader;
@@ -18,7 +21,7 @@ test("render", async () => {
       <PageDataContext.Provider
         value={{ publicUser: { id: "abc" } } as PageData}
       >
-        <FakeSettingsContext>
+        <FakeSettingsContext initialSettings={englishSettings()}>
           <FakeResultContext initialResults={faker.nextResultList(100)}>
             <PracticePage />
           </FakeResultContext>
