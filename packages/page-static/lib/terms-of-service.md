@@ -1,74 +1,100 @@
 # Terms of Service
 
-By using the _keybr.com_ website (“Service”) you are agreeing to be bound by the following terms and conditions (“Terms of Service”). Violation of any of the terms below will result in the termination of your Account. You agree to use the Service at your own risk.
+By using Hangul Typing Trainer (the "Service"), you agree to these Terms of
+Service. The Service is an open-source Korean dubeolsik typing trainer for
+learners who want to practice Hangul input, typing speed, accuracy, and
+keyboard familiarity. Use the Service at your own risk.
+
+These terms apply to the hosted instance of the Service that provides this
+page. If you run your own copy of the open-source software, you are responsible
+for the terms that apply to your own deployment. Use of the source code is also
+governed by the project's open-source license.
 
 ## Account Terms
 
-*   You must be a human. Accounts registered by “bots” or other automated methods are not permitted.
-*   You must provide a valid e‑mail address, and any other information requested in order to complete the signup process.
-*   You may create separate logins for many people, one login per person.
-*   You are responsible for maintaining the security of your account and credentials. _keybr.com_ cannot and will not be liable for any loss or damage from your failure to comply with this security obligation.
-*   You may not use the Service for any illegal or unauthorized purpose. You must not, in the use of the Service, violate any laws in your jurisdiction (including but not limited to copyright laws).
+* You must provide accurate information when creating an account or signing in.
+* You are responsible for maintaining the security of your account,
+  authentication provider, browser sessions, and credentials.
+* You may not create accounts through automated or abusive methods.
+* You may not impersonate another person, interfere with another user's account,
+  or attempt to access data that is not yours.
+* You may delete your account if account deletion is available in the account
+  settings. Deletion is intended to remove account-linked practice data and
+  profile information, subject to routine backups, logs, and legal obligations.
+
+## Learning Content and Practice Data
+
+The Service provides typing lessons, Korean word lists, dictionary hints,
+keyboard layout visualizations, progress charts, and related practice tools.
+Lessons may be generated from Korean words, jamo/key statistics, custom text,
+or other language-learning data. The Service is for practice and education; it
+does not provide language certification, professional instruction, or a
+guaranteed learning outcome.
+
+You are responsible for any custom text or other content that you enter into
+the Service. Do not submit content that you do not have the right to use, or
+content that is illegal, harmful, or highly sensitive. You grant the Service the
+limited right to process that content only as needed to generate lessons,
+display practice text, calculate statistics, sync your account, and operate the
+Service.
+
+## Acceptable Use
+
+You agree not to use the Service to:
+
+* Violate any law or the rights of another person.
+* Upload, enter, or share unlawful, abusive, or infringing content.
+* Attack, disrupt, scrape, overload, reverse engineer, or bypass security or
+  usage limits of the hosted Service.
+* Use automated traffic, bots, or scripts in a way that affects the reliability
+  of the Service or the experience of other users.
+* Misrepresent your identity or the origin of any data submitted to the
+  Service.
+
+## Availability and Changes
+
+The Service may change over time as the project evolves. Features, practice
+content, account functionality, multiplayer functionality, statistics, and
+integrations may be changed, suspended, or discontinued at any time. We are not
+responsible for loss of locally stored data, account data, progress history, or
+settings caused by browser changes, user action, service changes, outages, or
+other failures.
+
+## Paid Features and Refunds
+
+The current open-source project may be offered without paid features. If a
+hosted instance offers donations, paid accounts, premium features, or other
+purchases, the price, billing terms, provider terms, and refund instructions
+shown at the time of purchase will apply.
+
+Unless the purchase flow says otherwise or applicable law requires otherwise,
+refunds may be considered for duplicate payments, unauthorized purchases, or
+paid features that cannot be accessed because of a technical problem caused by
+the Service that cannot be resolved within a reasonable time. Refund requests
+should be sent through the support channel listed by the hosted instance.
 
 ## Disclaimer
 
-The materials on _keybr.com_’s website are provided “as is”. _keybr.com_ makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non–infringement of intellectual property or other violation of rights. Further, _keybr.com_ does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its Internet website or otherwise relating to such materials or on any sites linked to this site.
+The Service and all materials are provided "as is" and "as available." To the
+maximum extent permitted by law, we disclaim all warranties, express or implied,
+including warranties of merchantability, fitness for a particular purpose,
+non-infringement, availability, accuracy, and reliability. Korean word data,
+dictionary hints, generated lessons, charts, and typing metrics may contain
+errors or omissions.
 
-## Modifications to the Service and Prices
+## Limitation of Liability
 
-_keybr.com_ reserves the right at any time and from time to time to modify or discontinue, temporarily or permanently, the Service (or any part thereof) with or without notice. Prices of the Service are subject to change with or without notice from us. _keybr.com_ shall not be liable to you or to any third party for any modification, price change, suspension or discontinuance of the Service.
+To the maximum extent permitted by law, the Service maintainers, contributors,
+operators, and suppliers will not be liable for indirect, incidental, special,
+consequential, exemplary, or punitive damages, or for loss of data, profits,
+goodwill, or business opportunities, arising from your use of or inability to
+use the Service.
 
-## Limitations
+Some jurisdictions do not allow certain limitations of liability, so some of
+these limitations may not apply to you.
 
-In no event shall _keybr.com_ or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption,) arising out of the use or inability to use the materials on _keybr.com_’s Internet site, even if _keybr.com_ or a _keybr.com_ authorized representative has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you.
+## Changes to These Terms
 
-## Revisions and Errata
-
-The materials appearing on _keybr.com_’s website could include technical, typographical, or photographic errors. _keybr.com_ does not warrant that any of the materials on its website are accurate, complete, or current. _keybr.com_ may make changes to the materials contained on its website at any time without notice. _keybr.com_ does not, however, make any commitment to update the materials.
-
-## Terms of Service Modifications
-
-_keybr.com_ may revise these Terms of Service for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these Terms and Service.
-
-# Refund Policy
-
-At _keybr.com_, we strive to provide a premium experience for all our users. However, we understand that situations may arise where a refund is necessary. Please carefully review our refund policy below.
-
-## Eligibility for Refunds
-
-Refunds may be issued under the following conditions:
-
-* Technical Issues: If the premium features are not accessible or functional due to a technical problem caused by us, and we are unable to resolve the issue within a reasonable timeframe.
-* Unauthorized Purchase: If the purchase was made without the account owner’s consent.
-* Accidental purchases or duplicate payments.
-
-## Non-Refundable Situations
-
-Refunds will not be provided in the following cases:
-
-* Dissatisfaction with premium features after usage.
-* Violations of our *Terms of Service* that result in account suspension or termination.
-
-## How to Request a Refund
-
-To request a refund, please contact our support team at _info@keybr.com_ with the following information:
-
-* Your account email or user id.
-* Purchase date and proof of payment.
-* A detailed explanation of the reason for the refund request.
-
-Our team will review your request and respond within 7 business days.
-
-## Refund Processing
-
-Approved refunds will be processed back to the original payment method used at the time of purchase.
-
-Depending on your payment provider, it may take a few business days for the refund to appear in your account.
-
-Card refunds typically take 3–5 working days to credit back into the customer’s account.
-
-PayPal refunds typically re-appear in a customer’s account within 48 hours of requesting the refund.
-
-## Limitations
-
-Some payment methods impose limits on what transactions you can refund. For example, card payments can only be refunded on transactions less than 120 days old, and PayPal payments if it is less than 179 days old.
+We may update these Terms of Service from time to time by posting the updated
+version on this page. Continued use of the Service after changes are posted
+means that you accept the updated terms.

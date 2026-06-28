@@ -1,33 +1,60 @@
 export default `
 <h1>Privacy Policy</h1>
-<p>Your privacy is critically important to us. At <em>keybr.com</em> we have a few fundamental principles:</p>
+<p>Hangul Typing Trainer respects your privacy. This policy explains what information may be collected and how it may be used when you use the hosted instance of the Service that provides this page. If you run your own copy of the open-source software, the operator of that deployment is responsible for its own privacy practices.</p>
+<p>Our basic principles are:</p>
 <ul>
-<li>We don’t ask you for personal information unless we truly need it.</li>
-<li>We don’t share your personal information with anyone except to comply with the law, develop our products, or protect our rights.</li>
-<li>We don’t store personal information on our servers unless required for the on–going operation of one of our services.</li>
+<li>We collect only the information needed to provide and improve Korean typing practice.</li>
+<li>We do not sell your personal information.</li>
+<li>We prefer local and minimal storage where the product allows it.</li>
+<li>We give you ways to delete account-linked data when account features are enabled.</li>
 </ul>
-<p>Below is our privacy policy which incorporates these goals:</p>
-<h2>Website Visitors</h2>
-<p>Like most website operators, <em>keybr.com</em> collects non–personally–identifying information of the sort that web browsers and servers typically make available, such as the browser type, language preference, referring site, and the date and time of each visitor request. <em>keybr.com</em>’s purpose in collecting non–personally identifying information is to better understand how <em>keybr.com</em>’s visitors use its website. From time to time, <em>keybr.com</em> may release non–personally–identifying information in the aggregate, e.g., by publishing a report on trends in the usage of its website.</p>
-<p><em>keybr.com</em> also collects potentially personally–identifying information like Internet Protocol (IP) addresses. <em>keybr.com</em> does not use such information to identify its visitors, however, and does not disclose such information, other than under the same circumstances that it uses and discloses personally–identifying information, as described below.</p>
-<h2>Gathering of Personally–Identifying Information</h2>
-<p>Certain visitors to <em>keybr.com</em>’s websites choose to interact with <em>keybr.com</em> in ways that require <em>keybr.com</em> to gather personally–identifying information. The amount and type of information that <em>keybr.com</em> gathers depends on the nature of the interaction. Those who engage in transactions with <em>keybr.com</em> are asked to provide additional information, including as necessary the personal and financial information required to process those transactions. In each case, <em>keybr.com</em> collects such information only insofar as is necessary or appropriate to fulfill the purpose of the visitors interaction with <em>keybr.com</em>. <em>keybr.com</em> does not disclose personally–identifying information other than as described below. And visitors can always refuse to supply personally–identifying information, with the caveat that it may prevent them from engaging in certain website–related activities.</p>
-<h2>Aggregated Statistics</h2>
-<p><em>keybr.com</em> may collect statistics about the behavior of visitors to its websites. For instance, <em>keybr.com</em> may monitor the most popular pages on this site. <em>keybr.com</em> may display this information publicly or provide it to others. However, <em>keybr.com</em> does not disclose personally–identifying information other than as described below.</p>
-<h2>Protection of Certain Personally–Identifying Information</h2>
-<p><em>keybr.com</em> discloses personally–identifying information only to those of its employees, contractors and affiliated organizations that (i) need to know that information in order to process it on <em>keybr.com</em>’s behalf or to provide services available at <em>keybr.com</em>’s websites, and (ii) that have agreed not to disclose it to others. Some of those employees, contractors and affiliated organizations may be located outside of your home country; by using <em>keybr.com</em>’s websites, you consent to the transfer of such information to them. <em>keybr.com</em> will not rent or sell potentially personally–identifying and personally–identifying information to anyone. Other than to its employees, contractors and affiliated organizations, as described above, <em>keybr.com</em> discloses potentially personally–identifying and personally–identifying information only when required to do so by law, or when <em>keybr.com</em> believes in good faith that disclosure is reasonably necessary to protect the property or rights of <em>keybr.com</em>, third parties or the public at large. <em>keybr.com</em> takes all measures reasonably necessary to protect against the unauthorized access, use, alteration or destruction of potentially personally–identifying and personally–identifying information.</p>
-<h2>Security of Your Personally–Identifying Information</h2>
-<p>When we collect and process personally–identifying information, and while we retain this information, we will protect it within commercially acceptable means to prevent loss and theft, as well as unauthorized access, disclosure, copying, use, or modification.</p>
-<p>Although we will do our best to protect the personal information you provide to us, we advise that no method of electronic transmission or storage is 100% secure, and no one can guarantee absolute data security. We will comply with laws applicable to us in respect of any data breach.</p>
-<h2>Deleting Your Personally–Identifying Information</h2>
-<p>We only keep your personally–identifying information as long as you have a user account in <em>keybr.com</em>. You can delete your personally–identifying information by deleting an account. To delete your account follow these steps:</p>
+<h2>Information We Collect</h2>
+<p>Depending on how the Service is configured and how you use it, we may collect:</p>
+<ul>
+<li>Account information, such as your user id, email address, display name, avatar, linked authentication provider, and account preferences.</li>
+<li>Typing practice data, such as lesson history, speed, accuracy, score, key-level timing, jamo/key progress, selected language, selected keyboard layout, daily goals, and settings.</li>
+<li>Custom practice content that you enter, only as needed to generate lessons, display practice text, calculate statistics, or sync your account.</li>
+<li>Technical information, such as IP address, browser type, device type, language preference, referrer, requested URLs, timestamps, error reports, and server logs.</li>
+<li>Payment-related records if a hosted instance offers paid features, such as payment status, purchase identifiers, and receipts. Full card or payment account details are handled by the payment provider, not by the Service.</li>
+</ul>
+<p>If you use the Service without signing in, practice data and settings may be stored locally in your browser. Local data can be deleted by clearing your browser data and may be lost if you change browsers, devices, or storage settings.</p>
+<h2>Cookies and Local Storage</h2>
+<p>The Service may use cookies, local storage, and similar browser technologies to keep you signed in, remember settings, protect sessions, store local practice data, measure usage, and operate third-party integrations. If a Cookie Declaration is shown below this policy, it describes cookies and third-party services detected for this hosted instance.</p>
+<h2>How We Use Information</h2>
+<p>We use information to:</p>
+<ul>
+<li>Provide typing lessons, Hangul composition behavior, dubeolsik keyboard practice, statistics, charts, profiles, and other product features.</li>
+<li>Save or sync your practice progress and settings.</li>
+<li>Authenticate users and protect accounts.</li>
+<li>Diagnose errors, prevent abuse, secure the Service, and maintain reliability.</li>
+<li>Understand aggregated usage trends and improve the product.</li>
+<li>Process paid features if they are offered by the hosted instance.</li>
+</ul>
+<h2>Sharing Information</h2>
+<p>We do not sell your personal information. We may share information only when needed to operate the Service, including with:</p>
+<ul>
+<li>Hosting, database, authentication, email, analytics, monitoring, and payment providers that process information on our behalf.</li>
+<li>Law enforcement, regulators, courts, or other parties when required by law or when we believe disclosure is necessary to protect the Service, users, or the public.</li>
+<li>Another operator if the hosted Service is transferred, merged, reorganized, or replaced, subject to this policy or a policy with similar protections.</li>
+</ul>
+<p>Some features may intentionally make limited information public, such as a display name, avatar, public profile, high score, multiplayer result, or shared practice result. You should avoid using public profile information that you do not want others to see.</p>
+<h2>Retention</h2>
+<p>We keep account-linked personal information and practice data for as long as needed to provide the Service, until you delete your account, or until we no longer need it for legitimate operational, security, backup, or legal reasons. Server logs and diagnostic records are kept for a limited period appropriate to security and operations. Aggregated or anonymized statistics may be kept without identifying you.</p>
+<h2>Accessing and Deleting Your Information</h2>
+<p>If account features are enabled, you can delete your account from the account settings:</p>
 <ol>
-<li>Sing-in to your existing account.</li>
-<li>Visit the <code>Account</code> page.</li>
-<li>Click the <code>Delete Account</code> button.</li>
+<li>Sign in to your existing account.</li>
+<li>Visit the Account page.</li>
+<li>Click the Delete Account button.</li>
 </ol>
-<p>Please note that deleting an account is a permanent operation which cannot be undone.</p>
-<h1>Changes to this Privacy Policy</h1>
-<p>We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.</p>
-<p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+<p>Deleting an account is intended to remove account-linked practice data and profile information from the active Service. Deletion may not immediately remove data from backups, security logs, payment records, or records that must be retained for legal or operational reasons.</p>
+<p>If you use the Service without an account, you can delete locally stored data through your browser settings.</p>
+<h2>Security</h2>
+<p>We use reasonable technical and organizational measures to protect information against unauthorized access, loss, misuse, alteration, and disclosure. No method of transmission or storage is completely secure, so we cannot guarantee absolute security.</p>
+<h2>International Processing</h2>
+<p>The Service and its providers may process information in countries other than your own. By using the Service, you understand that your information may be transferred and processed where the Service or its providers operate.</p>
+<h2>Children's Privacy</h2>
+<p>The Service is intended for general language-learning and typing-practice use. If you are not old enough to use online services under the laws that apply to you, use the Service only with permission and supervision from a parent, guardian, school, or other responsible adult.</p>
+<h2>Changes to This Privacy Policy</h2>
+<p>We may update this Privacy Policy from time to time by posting the updated version on this page. Continued use of the Service after changes are posted means that you accept the updated policy.</p>
 `;
