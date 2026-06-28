@@ -18,6 +18,7 @@
   "scripts": {
     "postinstall": "husky && patch-package",
     "config-lint": "node scripts/config-lint.js",
+    "build-korean-dictionary": "node scripts/build-korean-dictionary.mjs",
     "translate": "node scripts/translate.js",
     "clean": "lage clean --no-cache",
     "compile": "lage compile --no-cache",
