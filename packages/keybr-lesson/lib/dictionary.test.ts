@@ -2,7 +2,7 @@ import { test } from "node:test";
 import { Filter, Letter } from "@keybr/phonetic-model";
 import { toCodePoints } from "@keybr/unicode";
 import { deepEqual } from "rich-assert";
-import { Dictionary } from "./dictionary.ts";
+import { Dictionary, filterWordList } from "./dictionary.ts";
 
 test("empty dictionary", () => {
   const dict = new Dictionary([]);
@@ -24,6 +24,27 @@ test("find words", () => {
   deepEqual(dict.find(new Filter(letters, null)), ["abc", "def", "ghi"]);
   deepEqual(dict.find(new Filter(letters, letters[0])), ["abc"]);
   deepEqual(dict.find(new Filter(letters, letters[3])), ["def"]);
+});
+
+test("find words with normalized code points", () => {
+  const dict = new Dictionary(
+    ["AB", "CD"],
+    (codePoint) =>
+      String.fromCodePoint(codePoint).toLowerCase().codePointAt(0)!,
+  );
+  const letters = toLetters("ab");
+  const codePoints = new Set(letters.map(({ codePoint }) => codePoint));
+
+  deepEqual(dict.find(new Filter(letters, letters[0])), ["AB"]);
+  deepEqual(
+    filterWordList(
+      ["AB", "CD"],
+      codePoints,
+      (codePoint) =>
+        String.fromCodePoint(codePoint).toLowerCase().codePointAt(0)!,
+    ),
+    ["AB"],
+  );
 });
 
 function toLetters(letters: string) {
