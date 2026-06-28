@@ -36,7 +36,7 @@ import {
   toTextInputSettings,
 } from "@keybr/textinput";
 import { type IInputEvent } from "@keybr/textinput-events";
-import { type CodePoint } from "@keybr/unicode";
+import { type CodePoint, toCodePoints } from "@keybr/unicode";
 import { type LastLesson } from "./last-lesson.ts";
 import { type Progress } from "./progress.ts";
 
@@ -104,6 +104,10 @@ export class LessonState {
     return this.#onInput(event, jamoEvents);
   }
 
+  onHangulPreedit(preedit: string): void {
+    this.suffix = this.#remainingCodePoints([...toCodePoints(preedit)]);
+  }
+
   get resultSteps(): readonly Step[] {
     return this.#resultSteps ?? this.textInput.steps;
   }
@@ -162,16 +166,34 @@ export class LessonState {
     }
   }
 
-  #remainingCodePoints(): CodePoint[] {
+  #remainingCodePoints(preedit: readonly CodePoint[] = []): CodePoint[] {
     const codePoints = this.textInput.remaining.map(
       ({ codePoint }) => codePoint,
     );
-    return this.#hangulEnabled() ? hangulKeystream(codePoints) : codePoints;
+    const remaining = this.#hangulEnabled()
+      ? hangulKeystream(codePoints)
+      : codePoints;
+    return removePrefix(remaining, preedit);
   }
 
   #hangulEnabled(): boolean {
     return this.lesson.model.language.id === "ko";
   }
+}
+
+function removePrefix(
+  codePoints: readonly CodePoint[],
+  prefix: readonly CodePoint[],
+): CodePoint[] {
+  if (prefix.length === 0 || prefix.length > codePoints.length) {
+    return [...codePoints];
+  }
+  for (let i = 0; i < prefix.length; i++) {
+    if (codePoints[i] !== prefix[i]) {
+      return [...codePoints];
+    }
+  }
+  return codePoints.slice(prefix.length);
 }
 
 function expandStep(step: Step): readonly Step[] {

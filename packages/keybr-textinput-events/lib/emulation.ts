@@ -1,5 +1,8 @@
 import {
+  decomposeHangulSyllable,
   Emulation,
+  isHangulJamo,
+  isHangulSyllable,
   type Keyboard,
   keyboardProps,
   KeyModifier,
@@ -9,10 +12,19 @@ import { type CodePoint } from "@keybr/unicode";
 import { isTextInput } from "./modifiers.ts";
 import { TimeToType } from "./timetotype.ts";
 import {
+  type IInputEvent,
   type IKeyboardEvent,
   type InputListener,
   type ModifierId,
 } from "./types.ts";
+
+type SyntheticJamo = {
+  readonly codePoint: CodePoint;
+  readonly timeStamp: number;
+};
+
+const syntheticJamoBufferSize = 8;
+const syntheticJamoMaxAge = 1000;
 
 export function emulateLayout(
   settings: Settings,
@@ -20,7 +32,7 @@ export function emulateLayout(
   target: InputListener,
 ): InputListener {
   if (keyboard.layout.emulate) {
-    switch (settings.get(keyboardProps.emulation)) {
+    switch (emulationMode(settings, keyboard)) {
       case Emulation.Forward:
         return forwardEmulation(keyboard, target);
       case Emulation.Reverse:
@@ -28,6 +40,13 @@ export function emulateLayout(
     }
   }
   return target;
+}
+
+function emulationMode(settings: Settings, keyboard: Keyboard): Emulation {
+  if (isKoreanKeyboard(keyboard)) {
+    return Emulation.Forward;
+  }
+  return settings.get(keyboardProps.emulation);
 }
 
 /**
@@ -44,12 +63,19 @@ function forwardEmulation(
   target: InputListener,
 ): InputListener {
   const timeToType = new TimeToType();
+  const syntheticJamo: SyntheticJamo[] = [];
   return {
     onKeyDown: (event) => {
       timeToType.add(event);
       const [mapped, codePoint] = fixKey(keyboard, event);
       target.onKeyDown(mapped);
       if (isTextInput(event.modifiers) && codePoint > 0x0000) {
+        if (isKoreanKeyboard(keyboard) && isHangulJamo(codePoint)) {
+          syntheticJamo.push({ codePoint, timeStamp: mapped.timeStamp });
+          if (syntheticJamo.length > syntheticJamoBufferSize) {
+            syntheticJamo.shift();
+          }
+        }
         target.onInput({
           type: "input",
           timeStamp: mapped.timeStamp,
@@ -66,6 +92,11 @@ function forwardEmulation(
     },
     onInput: (event) => {
       switch (event.inputType) {
+        case "appendChar":
+          if (shouldForwardAppendChar(keyboard, event, syntheticJamo)) {
+            target.onInput(event);
+          }
+          break;
         case "appendLineBreak":
         case "clearChar":
         case "clearWord":
@@ -74,6 +105,58 @@ function forwardEmulation(
       }
     },
   };
+}
+
+function shouldForwardAppendChar(
+  keyboard: Keyboard,
+  event: IInputEvent,
+  syntheticJamo: SyntheticJamo[],
+): boolean {
+  if (!isKoreanKeyboard(keyboard) || !isHangulSyllable(event.codePoint)) {
+    return false;
+  }
+  return !removeDuplicateComposedSyllable(event, syntheticJamo);
+}
+
+function removeDuplicateComposedSyllable(
+  event: IInputEvent,
+  syntheticJamo: SyntheticJamo[],
+): boolean {
+  const expectedJamo = decomposeHangulSyllable(event.codePoint);
+  if (expectedJamo == null) {
+    return false;
+  }
+  while (
+    syntheticJamo.length > 0 &&
+    event.timeStamp - syntheticJamo[0].timeStamp > syntheticJamoMaxAge
+  ) {
+    syntheticJamo.shift();
+  }
+  if (endsWithJamo(syntheticJamo, expectedJamo)) {
+    syntheticJamo.length -= expectedJamo.length;
+    return true;
+  }
+  return false;
+}
+
+function endsWithJamo(
+  syntheticJamo: readonly SyntheticJamo[],
+  expectedJamo: readonly CodePoint[],
+): boolean {
+  if (syntheticJamo.length < expectedJamo.length) {
+    return false;
+  }
+  const offset = syntheticJamo.length - expectedJamo.length;
+  for (let i = 0; i < expectedJamo.length; i++) {
+    if (syntheticJamo[offset + i].codePoint !== expectedJamo[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function isKoreanKeyboard(keyboard: Keyboard): boolean {
+  return keyboard.layout.language.id === "ko";
 }
 
 /**

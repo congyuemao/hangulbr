@@ -1,8 +1,8 @@
 import { test } from "node:test";
 import { textDisplaySettings, toLine } from "@keybr/textinput";
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
-import { equal } from "rich-assert";
+import { equal, isFalse } from "rich-assert";
 import { TextArea } from "./TextArea.tsx";
 
 test("render empty text", () => {
@@ -68,6 +68,32 @@ test("render text with line template", () => {
   );
 
   equal(r.container.textContent, "[abc][xyz]");
+
+  r.unmount();
+});
+
+test("activate on click when focus event is not dispatched", () => {
+  let focusCount = 0;
+  const r = render(
+    <IntlProvider locale="en">
+      <TextArea
+        settings={textDisplaySettings}
+        lines={{ text: "abc", lines: [toLine("abc")] }}
+        onFocus={() => {
+          focusCount += 1;
+        }}
+      />
+    </IntlProvider>,
+  );
+
+  const root = r.container.firstElementChild as HTMLElement;
+  const input = r.container.querySelector("textarea") as HTMLTextAreaElement;
+  input.focus = () => {};
+
+  fireEvent.click(root);
+
+  equal(focusCount, 1);
+  isFalse(r.container.textContent!.includes("Click or press Enter"));
 
   r.unmount();
 });

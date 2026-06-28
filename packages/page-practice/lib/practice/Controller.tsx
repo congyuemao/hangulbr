@@ -70,6 +70,7 @@ function useLessonState(
   const [key, setKey] = useState(0); // Creates new LessonState instances.
   const [, setLines] = useState<LineList>({ text: "", lines: [] }); // Forces UI update.
   const [, setDepressedKeys] = useState<readonly KeyId[]>([]); // Forces UI update.
+  const [, setSuffix] = useState<readonly CodePoint[]>([]); // Forces UI update.
   const lastLessonRef = useRef<LastLesson | null>(null);
 
   const onResultRef = useRef(onResult);
@@ -86,10 +87,12 @@ function useLessonState(
     const hangulIme = keyboard.layout.id === "ko-kr" ? new HangulIme() : null;
     setLines(state.lines);
     setDepressedKeys(state.depressedKeys);
+    setSuffix(state.suffix);
     const handleResetLesson = () => {
       state.resetLesson();
       hangulIme?.reset();
       setLines(state.lines);
+      setSuffix(state.suffix);
       setDepressedKeys((state.depressedKeys = []));
       timeout.cancel();
     };
@@ -97,6 +100,7 @@ function useLessonState(
       state.skipLesson();
       hangulIme?.reset();
       setLines(state.lines);
+      setSuffix(state.suffix);
       setDepressedKeys((state.depressedKeys = []));
       timeout.cancel();
     };
@@ -126,10 +130,13 @@ function useLessonState(
                   : state.onInput(ev);
               playSounds(feedback);
             }
+            state.onHangulPreedit(result.preedit);
             setLines(state.lines);
+            setSuffix(state.suffix);
           } else {
             const feedback = state.onInput(event);
             setLines(state.lines);
+            setSuffix(state.suffix);
             playSounds(feedback);
           }
           timeout.schedule(handleResetLesson, 10000);

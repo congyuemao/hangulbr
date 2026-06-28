@@ -31,6 +31,7 @@ export const KeyboardPresenter = memo(function KeyboardPresenter({
   const keyboard = useKeyboard();
   const colors = settings.get(keyboardProps.colors);
   const pointers = settings.get(keyboardProps.pointers);
+  const pointerDelay = keyboard.layout.language.id === "ko" ? 10 : undefined;
   return (
     <VirtualKeyboard keyboard={keyboard} height="16rem">
       <KeyLayer
@@ -38,7 +39,9 @@ export const KeyboardPresenter = memo(function KeyboardPresenter({
         toggledKeys={toggledKeys}
         showColors={colors}
       />
-      {focus && pointers && <PointersLayer suffix={suffix} />}
+      {focus && pointers && (
+        <PointersLayer suffix={suffix} delay={pointerDelay} />
+      )}
       {focus && lastLesson && (
         <HeatmapLayer histogram={flatten(lastLesson.misses)} modifier="m" />
       )}

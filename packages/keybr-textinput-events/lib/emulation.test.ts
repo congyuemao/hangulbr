@@ -167,6 +167,94 @@ test("forward emulation, incomplete events", () => {
   ]);
 });
 
+test("forward emulation, pass Korean IME composed syllables", () => {
+  // Arrange.
+
+  const target = tracingListener();
+  const listener = emulateLayout(
+    new Settings().set(keyboardProps.emulation, Emulation.Forward),
+    loadKeyboard(Layout.KO_KR),
+    target,
+  );
+
+  // Act.
+
+  replay(listener, {
+    timeStamp: 100,
+    type: "input",
+    inputType: "appendChar",
+    codePoint: /* "기" */ 0xae30,
+    timeToType: 111,
+  });
+
+  // Assert.
+
+  deepEqual(target.trace, ["100,appendChar,기,111"]);
+});
+
+test("forward emulation, suppress duplicated Korean IME syllables", () => {
+  // Arrange.
+
+  const target = tracingListener();
+  const listener = emulateLayout(
+    new Settings().set(keyboardProps.emulation, Emulation.Forward),
+    loadKeyboard(Layout.KO_KR),
+    target,
+  );
+
+  // Act.
+
+  replay(
+    listener,
+    { timeStamp: 100, type: "keydown", code: "KeyR", key: "Process", modifiers: [] },
+    { timeStamp: 200, type: "keydown", code: "KeyL", key: "Process", modifiers: [] },
+    {
+      timeStamp: 300,
+      type: "input",
+      inputType: "appendChar",
+      codePoint: /* "기" */ 0xae30,
+      timeToType: 111,
+    },
+  );
+
+  // Assert.
+
+  deepEqual(target.trace, [
+    "100,keydown,KeyR,ㄱ",
+    "100,appendChar,ㄱ,100",
+    "200,keydown,KeyL,ㅣ",
+    "200,appendChar,ㅣ,100",
+  ]);
+});
+
+test("korean layout always uses forward emulation", () => {
+  // Arrange.
+
+  const target = tracingListener();
+  const listener = emulateLayout(
+    new Settings().set(keyboardProps.emulation, Emulation.None),
+    loadKeyboard(Layout.KO_KR),
+    target,
+  );
+
+  // Act.
+
+  replay(listener, {
+    timeStamp: 100,
+    type: "keydown",
+    code: "KeyR",
+    key: "r",
+    modifiers: [],
+  });
+
+  // Assert.
+
+  deepEqual(target.trace, [
+    "100,keydown,KeyR,ㄱ", //
+    "100,appendChar,ㄱ,100",
+  ]);
+});
+
 test("reverse emulation, translate character codes", () => {
   // Arrange.
 

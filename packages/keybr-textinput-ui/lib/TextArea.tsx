@@ -57,15 +57,31 @@ export function TextArea({
 } & ZoomableProps): ReactNode {
   const ref = useRef<HTMLDivElement>(null);
   const innerRef = useRef<Focusable>(null);
+  const [focus, setFocus] = useState(false);
+  const focusStateRef = useRef(false);
+  const focusCallbacksRef = useRef({ onFocus, onBlur });
+  focusCallbacksRef.current = { onFocus, onBlur };
+  const updateFocus = useCallback((value: boolean) => {
+    if (focusStateRef.current !== value) {
+      focusStateRef.current = value;
+      setFocus(value);
+      if (value) {
+        focusCallbacksRef.current.onFocus?.();
+      } else {
+        focusCallbacksRef.current.onBlur?.();
+      }
+    }
+  }, []);
   useImperativeHandle(focusRef, () => ({
     focus() {
       innerRef.current?.focus();
+      updateFocus(true);
     },
     blur() {
       innerRef.current?.blur();
+      updateFocus(false);
     },
   }));
-  const [focus, setFocus] = useState(false);
   useEffect(() => {
     const element = ref.current;
     if (element != null) {
@@ -81,18 +97,18 @@ export function TextArea({
   useHotkeys({
     ["Enter"]: () => {
       innerRef.current?.focus();
+      updateFocus(true);
     },
   });
   const handleFocus = useCallback(() => {
-    setFocus(true);
-    onFocus?.();
-  }, [onFocus]);
+    updateFocus(true);
+  }, [updateFocus]);
   const handleBlur = useCallback(() => {
-    setFocus(false);
-    onBlur?.();
-  }, [onBlur]);
+    updateFocus(false);
+  }, [updateFocus]);
   const handleClick = (event: BaseSyntheticEvent): void => {
     innerRef.current?.focus();
+    updateFocus(true);
     event.preventDefault();
   };
   return (

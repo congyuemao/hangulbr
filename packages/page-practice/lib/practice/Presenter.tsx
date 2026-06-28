@@ -200,21 +200,15 @@ export class Presenter extends PureComponent<Props, State> {
   };
 
   handleKeyDown = (ev: IKeyboardEvent) => {
-    if (this.state.focus) {
-      this.props.onKeyDown(ev);
-    }
+    this.props.onKeyDown(ev);
   };
 
   handleKeyUp = (ev: IKeyboardEvent) => {
-    if (this.state.focus) {
-      this.props.onKeyUp(ev);
-    }
+    this.props.onKeyUp(ev);
   };
 
   handleInput = (ev: IInputEvent) => {
-    if (this.state.focus) {
-      this.props.onInput(ev);
-    }
+    this.props.onInput(ev);
   };
 
   handleFocus = () => {
