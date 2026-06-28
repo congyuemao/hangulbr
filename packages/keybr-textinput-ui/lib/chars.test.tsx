@@ -123,6 +123,35 @@ test("render styled chars", () => {
   );
 });
 
+test("render titled chars", () => {
+  deepEqual(
+    renderChars(textDisplaySettings, [
+      {
+        codePoint: /* "k" */ 0x006b,
+        attrs: Attr.Normal,
+        cls: "keyword",
+        title: "Korean",
+      },
+      {
+        codePoint: /* "o" */ 0x006f,
+        attrs: Attr.Normal,
+        cls: "keyword",
+        title: "Korean",
+      },
+    ]),
+    [
+      <span
+        key={0}
+        title="Korean"
+        className={undefined}
+        style={{ color: "var(--syntax-keyword)" }}
+      >
+        ko
+      </span>,
+    ],
+  );
+});
+
 test("render special chars", () => {
   deepEqual(
     renderChars(textDisplaySettings, [

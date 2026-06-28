@@ -30,6 +30,10 @@ test("split styled text", () => {
     { codePoint: 0x0079, attrs: Attr.Normal, cls: "c1" },
     { codePoint: 0x007a, attrs: Attr.Normal, cls: "c1" },
   ]);
+  deepEqual(splitStyledText([[{ text: "ko", cls: "c1", title: "Korean" }]]), [
+    { codePoint: 0x006b, attrs: Attr.Normal, cls: "c1", title: "Korean" },
+    { codePoint: 0x006f, attrs: Attr.Normal, cls: "c1", title: "Korean" },
+  ]);
   deepEqual(splitStyledText([["abc"], [{ text: "xyz", cls: "c1" }]]), [
     { codePoint: 0x0061, attrs: Attr.Normal, cls: null },
     { codePoint: 0x0062, attrs: Attr.Normal, cls: null },
@@ -63,6 +67,12 @@ test("equal chars", () => {
     charsAreEqual(
       { codePoint: 0x0061, attrs: Attr.Normal, cls: "c1" },
       { codePoint: 0x0061, attrs: Attr.Normal, cls: "c2" },
+    ),
+  );
+  isFalse(
+    charsAreEqual(
+      { codePoint: 0x0061, attrs: Attr.Normal, cls: "c1", title: "a" },
+      { codePoint: 0x0061, attrs: Attr.Normal, cls: "c1", title: "b" },
     ),
   );
 });
