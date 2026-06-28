@@ -1,9 +1,10 @@
 import { type WordList } from "@keybr/content";
 import { type Keyboard } from "@keybr/keyboard";
 import { Filter, Letter, type PhoneticModel } from "@keybr/phonetic-model";
-import { type RNGStream } from "@keybr/rand";
+import { randomSample, type RNGStream } from "@keybr/rand";
 import { type KeyStatsMap } from "@keybr/result";
 import { type Settings } from "@keybr/settings";
+import { type CodePoint } from "@keybr/unicode";
 import { Dictionary, filterWordList } from "./dictionary.ts";
 import { LessonKey, LessonKeys } from "./key.ts";
 import { Lesson } from "./lesson.ts";
@@ -142,6 +143,9 @@ export class GuidedLesson extends Lesson {
 
   #makeWordGenerator(filter: Filter, lessonKeys: LessonKeys, rng: RNGStream) {
     const pseudoWords = phoneticWords(this.model, filter, rng);
+    if (this.#shouldUseKoreanJamoDrills(lessonKeys)) {
+      return koreanJamoDrillWords(lessonKeys, rng);
+    }
     if (
       this.settings.get(lessonProps.guided.naturalWords) &&
       !this.#shouldStartWithUnlockedKeys(lessonKeys)
@@ -163,10 +167,97 @@ export class GuidedLesson extends Lesson {
     return pseudoWords;
   }
 
+  #shouldUseKoreanJamoDrills(lessonKeys: LessonKeys): boolean {
+    if (this.model.language.id !== "ko") {
+      return false;
+    }
+    if (lessonKeys.findIncludedKeys().length >= this.model.letters.length) {
+      return false;
+    }
+    const focusedKey = lessonKeys.findFocusedKey();
+    return focusedKey == null || focusedKey.samples.length === 0;
+  }
+
   #shouldStartWithUnlockedKeys(lessonKeys: LessonKeys): boolean {
     return (
       this.model.language.id === "ko" &&
       lessonKeys.findIncludedKeys().length < this.model.letters.length
     );
   }
+}
+
+function koreanJamoDrillWords(
+  lessonKeys: LessonKeys,
+  rng: RNGStream,
+): () => string | null {
+  const included = lessonKeys
+    .findIncludedKeys()
+    .map(({ letter }) => letter.codePoint)
+    .filter(isKoreanJamoLetter);
+  const focused = lessonKeys.findFocusedKey();
+  const focusedCodePoint =
+    focused != null && isKoreanJamoLetter(focused.letter.codePoint)
+      ? focused.letter.codePoint
+      : null;
+  const vowels = included.filter(isKoreanVowel);
+  const consonants = included.filter(isKoreanConsonant);
+
+  return () => {
+    if (included.length === 0) {
+      return null;
+    }
+    const word: CodePoint[] = [];
+    // Keep vowels before consonants so early drills stay as jamo after display composition.
+    appendDrillSegment(
+      word,
+      vowels,
+      focusedCodePoint != null && isKoreanVowel(focusedCodePoint)
+        ? focused
+        : null,
+      rng,
+    );
+    appendDrillSegment(
+      word,
+      consonants,
+      focusedCodePoint != null && isKoreanConsonant(focusedCodePoint)
+        ? focused
+        : null,
+      rng,
+    );
+    if (word.length === 0) {
+      word.push(focusedCodePoint ?? randomSample(included, rng));
+    }
+    return String.fromCodePoint(...word);
+  };
+}
+
+function appendDrillSegment(
+  word: CodePoint[],
+  codePoints: readonly CodePoint[],
+  focusedKey: LessonKey | null,
+  rng: RNGStream,
+): void {
+  if (codePoints.length === 0) {
+    return;
+  }
+  const start = word.length;
+  const length = 1 + ((rng() * 3) | 0);
+  for (let i = 0; i < length; i++) {
+    word.push(randomSample(codePoints, rng));
+  }
+  if (focusedKey != null) {
+    word[start + ((rng() * length) | 0)] = focusedKey.letter.codePoint;
+  }
+}
+
+function isKoreanJamoLetter(codePoint: CodePoint): boolean {
+  return isKoreanConsonant(codePoint) || isKoreanVowel(codePoint);
+}
+
+function isKoreanConsonant(codePoint: CodePoint): boolean {
+  return codePoint >= 0x3131 && codePoint <= 0x314e;
+}
+
+function isKoreanVowel(codePoint: CodePoint): boolean {
+  return codePoint >= 0x314f && codePoint <= 0x3163;
 }

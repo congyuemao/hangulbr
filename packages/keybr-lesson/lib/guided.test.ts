@@ -1,5 +1,6 @@
 import { describe, it, test } from "node:test";
 import {
+  composeHangulText,
   Language,
   Layout,
   loadKeyboard,
@@ -13,7 +14,11 @@ import {
   PhoneticModel,
 } from "@keybr/phonetic-model";
 import { FakeRNGStream } from "@keybr/rand";
-import { makeKeyStatsMap } from "@keybr/result";
+import {
+  type KeyStats,
+  type KeyStatsMap,
+  makeKeyStatsMap,
+} from "@keybr/result";
 import { Settings } from "@keybr/settings";
 import { flattenStyledText } from "@keybr/textinput";
 import { deepEqual, equal, isFalse, isTrue } from "rich-assert";
@@ -258,12 +263,29 @@ test("generate text with natural words", () => {
   );
 });
 
-test("start Korean guided lessons with unlocked keys, not natural words", () => {
+test("start Korean guided lessons with jamo drills", () => {
   const settings = new Settings().set(lessonProps.guided.naturalWords, true);
   const keyboard = loadKeyboard(Layout.KO_KR);
   const model = new KoreanGuidedModel();
   const lesson = new GuidedLesson(settings, keyboard, model, koreanWordList());
   const lessonKeys = lesson.update(makeKeyStatsMap(lesson.letters, []));
+  const text = flattenStyledText(lesson.generate(lessonKeys, model.rng));
+  const focusedJamo = String.fromCodePoint(koLetters[0].codePoint);
+
+  isTrue(text.split(/\s+/u).every((word) => word.includes(focusedJamo)));
+  equal(composeHangulText(text), text);
+  isFalse(text.includes(model.pseudoWord));
+  isFalse(text.includes(koreanRealWord));
+});
+
+test("use Korean phonetic words after focused key has samples", () => {
+  const settings = new Settings().set(lessonProps.guided.naturalWords, true);
+  const keyboard = loadKeyboard(Layout.KO_KR);
+  const model = new KoreanGuidedModel();
+  const lesson = new GuidedLesson(settings, keyboard, model, koreanWordList());
+  const lessonKeys = lesson.update(
+    sampledKoreanKeyStatsMap(koLetters.slice(0, 6)),
+  );
   const text = flattenStyledText(lesson.generate(lessonKeys, model.rng));
 
   isTrue(text.split(/\s+/u).every((word) => word === model.pseudoWord));
@@ -742,6 +764,39 @@ const koreanRealWord = koWord(0x3142, 0x3131, 0x3145);
 
 function koreanWordList(): string[] {
   return Array.from({ length: 15 }, () => koreanRealWord);
+}
+
+function sampledKoreanKeyStatsMap(
+  sampledLetters: readonly Letter[],
+): KeyStatsMap {
+  const map = new Map<Letter, KeyStats>(
+    koLetters.map((letter) => [
+      letter,
+      {
+        letter,
+        samples: sampledLetters.includes(letter)
+          ? [
+              {
+                index: 0,
+                timeStamp: 100,
+                hitCount: 1,
+                missCount: 0,
+                timeToType: 1000,
+                filteredTimeToType: 1000,
+              },
+            ]
+          : [],
+        timeToType: sampledLetters.includes(letter) ? 1000 : null,
+        bestTimeToType: sampledLetters.includes(letter) ? 1000 : null,
+      },
+    ]),
+  );
+  return {
+    letters: [...map.keys()],
+    results: [],
+    get: (letter) => map.get(letter)!,
+    [Symbol.iterator]: () => map.values(),
+  };
 }
 
 function koWord(...codePoints: readonly number[]): string {
