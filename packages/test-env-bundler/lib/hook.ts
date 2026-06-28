@@ -28,7 +28,7 @@ export async function load(url: string, context: any, nextLoad: any) {
         return {
           format: "module",
           shortCircuit: true,
-          source: `export default "${fileName}";`,
+          source: `export default ${JSON.stringify(fileName)};`,
         };
       }
     }
