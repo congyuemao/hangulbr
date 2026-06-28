@@ -112,7 +112,7 @@ export class GuidedLesson extends Lesson {
       lessonKeys.findIncludedKeys(),
       lessonKeys.findFocusedKey(),
     );
-    const wordGenerator = this.#makeWordGenerator(filter, rng);
+    const wordGenerator = this.#makeWordGenerator(filter, lessonKeys, rng);
     const words = mangledWords(
       uniqueWords(wordGenerator),
       this.model.language,
@@ -140,9 +140,12 @@ export class GuidedLesson extends Lesson {
     }
   }
 
-  #makeWordGenerator(filter: Filter, rng: RNGStream) {
+  #makeWordGenerator(filter: Filter, lessonKeys: LessonKeys, rng: RNGStream) {
     const pseudoWords = phoneticWords(this.model, filter, rng);
-    if (this.settings.get(lessonProps.guided.naturalWords)) {
+    if (
+      this.settings.get(lessonProps.guided.naturalWords) &&
+      !this.#shouldStartWithUnlockedKeys(lessonKeys)
+    ) {
       const words = this.dictionary.find(filter).slice(0, 1000);
       while (words.length < 15) {
         const word = pseudoWords();
@@ -158,5 +161,12 @@ export class GuidedLesson extends Lesson {
       return randomWords(words, rng);
     }
     return pseudoWords;
+  }
+
+  #shouldStartWithUnlockedKeys(lessonKeys: LessonKeys): boolean {
+    return (
+      this.model.language.id === "ko" &&
+      lessonKeys.findIncludedKeys().length < this.model.letters.length
+    );
   }
 }

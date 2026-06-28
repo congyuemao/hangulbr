@@ -1,9 +1,22 @@
 import { describe, it, test } from "node:test";
-import { Layout, loadKeyboard } from "@keybr/keyboard";
-import { FakePhoneticModel } from "@keybr/phonetic-model";
+import {
+  Language,
+  Layout,
+  loadKeyboard,
+  Ngram1,
+  Ngram2,
+} from "@keybr/keyboard";
+import {
+  FakePhoneticModel,
+  type Filter,
+  Letter,
+  PhoneticModel,
+} from "@keybr/phonetic-model";
+import { FakeRNGStream } from "@keybr/rand";
 import { makeKeyStatsMap } from "@keybr/result";
 import { Settings } from "@keybr/settings";
-import { deepEqual, equal } from "rich-assert";
+import { flattenStyledText } from "@keybr/textinput";
+import { deepEqual, equal, isFalse, isTrue } from "rich-assert";
 import { fakeKeyStatsMap, printLessonKeys } from "./fakes.ts";
 import { GuidedLesson } from "./guided.ts";
 import { LessonKey } from "./key.ts";
@@ -243,6 +256,32 @@ test("generate text with natural words", () => {
     "abcaf abcbe abcaa abcaf abcbe abcaa abcaf abcbe abcaa abcaf abcbe abcaa " +
       "abcaf abcbe abcaa abcaf abcbe abcaa abcaf abcbe",
   );
+});
+
+test("start Korean guided lessons with unlocked keys, not natural words", () => {
+  const settings = new Settings().set(lessonProps.guided.naturalWords, true);
+  const keyboard = loadKeyboard(Layout.KO_KR);
+  const model = new KoreanGuidedModel();
+  const lesson = new GuidedLesson(settings, keyboard, model, koreanWordList());
+  const lessonKeys = lesson.update(makeKeyStatsMap(lesson.letters, []));
+  const text = flattenStyledText(lesson.generate(lessonKeys, model.rng));
+
+  isTrue(text.split(/\s+/u).every((word) => word === model.pseudoWord));
+  isFalse(text.includes(koreanRealWord));
+});
+
+test("use Korean natural words after all keys are unlocked", () => {
+  const settings = new Settings()
+    .set(lessonProps.guided.naturalWords, true)
+    .set(lessonProps.guided.alphabetSize, 1);
+  const keyboard = loadKeyboard(Layout.KO_KR);
+  const model = new KoreanGuidedModel();
+  const lesson = new GuidedLesson(settings, keyboard, model, koreanWordList());
+  const lessonKeys = lesson.update(makeKeyStatsMap(lesson.letters, []));
+  const text = flattenStyledText(lesson.generate(lessonKeys, model.rng));
+
+  isTrue(text.split(/\s+/u).every((word) => word === koreanRealWord));
+  isFalse(text.includes(model.pseudoWord));
 });
 
 describe("unlock keys", () => {
@@ -685,3 +724,63 @@ describe("unlock keys", () => {
     });
   });
 });
+
+const koLetters = [
+  0x3142, // HANGUL LETTER PIEUP
+  0x3148, // HANGUL LETTER CIEUC
+  0x3137, // HANGUL LETTER TIKEUT
+  0x3131, // HANGUL LETTER KIYEOK
+  0x3145, // HANGUL LETTER SIOS
+  0x315b, // HANGUL LETTER YO
+  0x3155, // HANGUL LETTER YEO
+].map(
+  (codePoint, index) =>
+    new Letter(codePoint, 1 / (index + 1), String.fromCodePoint(codePoint)),
+);
+
+const koreanRealWord = koWord(0x3142, 0x3131, 0x3145);
+
+function koreanWordList(): string[] {
+  return Array.from({ length: 15 }, () => koreanRealWord);
+}
+
+function koWord(...codePoints: readonly number[]): string {
+  return String.fromCodePoint(...codePoints);
+}
+
+class KoreanGuidedModel extends PhoneticModel {
+  readonly rng = FakeRNGStream(1);
+  readonly pseudoWord = koWord(0x3142, 0x3148, 0x3137);
+
+  constructor() {
+    super(Language.KO, koLetters);
+  }
+
+  override nextWord(filter: Filter): string {
+    const codePoints = this.letters
+      .filter(({ codePoint }) => filter.includes(codePoint))
+      .slice(0, 3)
+      .map(({ codePoint }) => codePoint);
+    return koWord(...codePoints);
+  }
+
+  override ngram1(): Ngram1 {
+    const alphabet = this.letters.map(({ codePoint }) => codePoint);
+    const ngram = new Ngram1(alphabet);
+    for (const codePoint of alphabet) {
+      ngram.set(codePoint, 1);
+    }
+    return ngram;
+  }
+
+  override ngram2(): Ngram2 {
+    const alphabet = this.letters.map(({ codePoint }) => codePoint);
+    const ngram = new Ngram2(alphabet);
+    for (const a of alphabet) {
+      for (const b of alphabet) {
+        ngram.set(a, b, 1);
+      }
+    }
+    return ngram;
+  }
+}
