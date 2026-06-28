@@ -1,4 +1,5 @@
 import { ErrorHandler } from "@keybr/debug";
+import { defaultLocale } from "@keybr/intl";
 import {
   getPageData,
   LoadingProgress,
@@ -47,7 +48,7 @@ export function App() {
 function PageRoutes() {
   const { locale } = useIntl();
   return (
-    <BrowserRouter basename={Pages.intlBase(locale)}>
+    <BrowserRouter basename={computeBasename(locale)}>
       <Routes>
         <Route
           index={true}
@@ -141,4 +142,19 @@ function PageRoutes() {
       </Routes>
     </BrowserRouter>
   );
+}
+
+function computeBasename(locale: string): string {
+  const base = Pages.intlBase(locale);
+  if (base !== "") {
+    return base;
+  }
+  if (typeof window === "undefined") {
+    return base;
+  }
+  const m = /^\/([^/]+)(?:\/|$)/.exec(window.location.pathname);
+  if (m != null && decodeURIComponent(m[1]).toLowerCase() === defaultLocale) {
+    return `/${defaultLocale}`;
+  }
+  return base;
 }
