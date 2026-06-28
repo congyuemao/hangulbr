@@ -18,7 +18,7 @@ export function LearningRateDescription({
         <Name>
           <FormattedMessage
             id="learningRate.alreadyUnlocked"
-            defaultMessage="This letter is already unlocked."
+            defaultMessage="This jamo is already unlocked."
           />
         </Name>
       </Para>
@@ -36,7 +36,7 @@ export function LearningRateDescription({
             id="learningRate.remainingLessons"
             defaultMessage={
               "Approximately {remainingLessons} lessons remaining to " +
-              "unlock the next letter ({certainty} certainty)."
+              "unlock the next jamo ({certainty} certainty)."
             }
             values={{
               remainingLessons: (
@@ -56,7 +56,7 @@ export function LearningRateDescription({
       <Name>
         <FormattedMessage
           id="learningRate.unknown"
-          defaultMessage="Need more data to compute the remaining lessons to unlock this letter."
+          defaultMessage="Need more data to compute the remaining lessons to unlock this jamo."
         />
       </Name>
     </Para>

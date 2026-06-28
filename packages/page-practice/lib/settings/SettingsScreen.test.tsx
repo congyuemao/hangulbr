@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import { FakeIntlProvider } from "@keybr/intl";
-import { KeyboardOptions, Language } from "@keybr/keyboard";
+import { KeyboardOptions } from "@keybr/keyboard";
 import { FakePhoneticModel } from "@keybr/phonetic-model";
 import { PhoneticModelLoader } from "@keybr/phonetic-model-loader";
 import { FakeResultContext, ResultFaker } from "@keybr/result";
@@ -10,15 +10,14 @@ import { isNotNull } from "rich-assert";
 import { SettingsScreen } from "./SettingsScreen.tsx";
 
 const faker = new ResultFaker();
-const englishSettings = () =>
-  KeyboardOptions.default().withLanguage(Language.EN).save(new Settings());
+const koreanSettings = () => KeyboardOptions.default().save(new Settings());
 
 test("render", async () => {
   PhoneticModelLoader.loader = FakePhoneticModel.loader;
 
   const r = render(
     <FakeIntlProvider>
-      <FakeSettingsContext initialSettings={englishSettings()}>
+      <FakeSettingsContext initialSettings={koreanSettings()}>
         <FakeResultContext initialResults={faker.nextResultList(100)}>
           <SettingsScreen />
         </FakeResultContext>

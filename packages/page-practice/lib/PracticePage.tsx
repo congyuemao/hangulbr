@@ -1,6 +1,7 @@
 import { KeyboardOptions, Layout } from "@keybr/keyboard";
 import { Settings } from "@keybr/settings";
 import { ViewSwitch } from "@keybr/widget";
+import { PracticeSettingsNormalizer } from "./PracticeSettingsNormalizer.tsx";
 import { views } from "./views.tsx";
 
 setDefaultLayout("ko-KR");
@@ -18,5 +19,9 @@ function setDefaultLayout(localeId: string) {
 }
 
 export function PracticePage() {
-  return <ViewSwitch views={views} />;
+  return (
+    <PracticeSettingsNormalizer>
+      <ViewSwitch views={views} />
+    </PracticeSettingsNormalizer>
+  );
 }

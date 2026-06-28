@@ -27,14 +27,7 @@ export function generateSitemapXml(canonicalUrl: string): any {
   };
   const sortedLocales = [...new Set([defaultLocale, ...allLocales])];
   const url: unknown[] = [];
-  for (const page of [
-    Pages.practice,
-    Pages.help,
-    Pages.highScores,
-    Pages.layouts,
-    Pages.multiplayer,
-    Pages.typingTest,
-  ]) {
+  for (const page of [Pages.practice, Pages.help]) {
     for (const locale of sortedLocales) {
       const alternate: any[] = [];
       for (const alternateLocale of sortedLocales) {

@@ -1,13 +1,5 @@
 import { defaultLocale } from "@keybr/intl";
-import {
-  mdiCarSide,
-  mdiChartAreaspline,
-  mdiHelpCircleOutline,
-  mdiKeyboard,
-  mdiKeyboardOutline,
-  mdiSpeedometer,
-  mdiTrophyOutline,
-} from "@mdi/js";
+import { mdiChartAreaspline, mdiHelpCircleOutline, mdiKeyboard } from "@mdi/js";
 import { defineMessage, type MessageDescriptor } from "react-intl";
 import { type AnonymousUser, type AnyUser, type NamedUser } from "./types.ts";
 
@@ -30,20 +22,14 @@ export type PageInfo = {
 
 export namespace Pages {
   const meta: Meta[] = [
-    { property: "fb:app_id", content: "545353762151265" },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://www.keybr.com/" },
-    { property: "og:site_name", content: "keybr.com - Typing lessons" },
-    { property: "og:title", content: "keybr.com - Typing lessons" },
+    { property: "og:site_name", content: "Hangul Typing Trainer" },
+    { property: "og:title", content: "Hangul Typing Trainer" },
     {
       property: "og:description",
-      content:
-        "Teaching the world to type at the speed of thought! Typing lessons that work.",
+      content: "Adaptive Korean dubeolsik typing practice for Hangul learners.",
     },
-    { property: "og:image", content: "https://www.keybr.com/cover.png" },
     { name: "twitter:card", content: "summary" },
-    { name: "twitter:site", content: "@keybrcom" },
-    { name: "twitter:creator", content: "@keybrcom" },
   ];
 
   export const account = {
@@ -75,7 +61,7 @@ export namespace Pages {
       title: defineMessage({
         id: "page.practice.description",
         defaultMessage:
-          "Typing practice lessons to improve your speed and accuracy.",
+          "Practice Korean dubeolsik typing with adaptive Hangul lessons.",
       }),
       icon: mdiKeyboard,
     },
@@ -86,7 +72,7 @@ export namespace Pages {
         content: defineMessage({
           id: "page.practice.description",
           defaultMessage:
-            "Typing practice lessons to improve your speed and accuracy.",
+            "Practice Korean dubeolsik typing with adaptive Hangul lessons.",
         }),
       },
     ],
@@ -106,7 +92,7 @@ export namespace Pages {
       title: defineMessage({
         id: "page.profile.description",
         defaultMessage:
-          "The detailed statistics regarding your learning progress.",
+          "Detailed Korean typing statistics, including speed, accuracy, and per-jamo progress.",
       }),
       icon: mdiChartAreaspline,
     },
@@ -126,7 +112,8 @@ export namespace Pages {
       }),
       title: defineMessage({
         id: "page.help.description",
-        defaultMessage: "The instructions for using this application.",
+        defaultMessage:
+          "How Hangul Typing Trainer teaches Korean dubeolsik practice.",
       }),
       icon: mdiHelpCircleOutline,
     },
@@ -136,123 +123,8 @@ export namespace Pages {
         name: "description",
         content: defineMessage({
           id: "page.help.description",
-          defaultMessage: "The instructions for using this application.",
-        }),
-      },
-    ],
-  } satisfies PageInfo;
-
-  export const highScores = {
-    path: "/high-scores",
-    title: defineMessage({
-      id: "t_High_Scores",
-      defaultMessage: "High Scores",
-    }),
-    link: {
-      label: defineMessage({
-        id: "t_High_Scores",
-        defaultMessage: "High Scores",
-      }),
-      title: defineMessage({
-        id: "page.highScores.description",
-        defaultMessage: "The high score table for the fastest users.",
-      }),
-      icon: mdiTrophyOutline,
-    },
-    meta: [
-      ...meta,
-      {
-        name: "description",
-        content: defineMessage({
-          id: "page.highScores.description",
-          defaultMessage: "The high score table for the fastest users.",
-        }),
-      },
-    ],
-  } satisfies PageInfo;
-
-  export const multiplayer = {
-    path: "/multiplayer",
-    title: defineMessage({
-      id: "t_Multiplayer",
-      defaultMessage: "Multiplayer",
-    }),
-    link: {
-      label: defineMessage({
-        id: "t_Multiplayer",
-        defaultMessage: "Multiplayer",
-      }),
-      title: defineMessage({
-        id: "page.multiplayer.description",
-        defaultMessage: "Online multiplayer type racing game.",
-      }),
-      icon: mdiCarSide,
-    },
-    meta: [
-      ...meta,
-      {
-        name: "description",
-        content: defineMessage({
-          id: "page.multiplayer.description",
-          defaultMessage: "Online multiplayer type racing game.",
-        }),
-      },
-    ],
-  } satisfies PageInfo;
-
-  export const typingTest = {
-    path: "/typing-test",
-    title: defineMessage({
-      id: "t_Typing_Test",
-      defaultMessage: "Typing Test",
-    }),
-    link: {
-      label: defineMessage({
-        id: "t_Typing_Test",
-        defaultMessage: "Typing Test",
-      }),
-      title: defineMessage({
-        id: "page.typingTest.description",
-        defaultMessage: "Typing speed and accuracy test.",
-      }),
-      icon: mdiSpeedometer,
-    },
-    meta: [
-      ...meta,
-      {
-        name: "description",
-        content: defineMessage({
-          id: "page.typingTest.description",
-          defaultMessage: "Typing speed and accuracy test.",
-        }),
-      },
-    ],
-  } satisfies PageInfo;
-
-  export const layouts = {
-    path: "/layouts",
-    title: defineMessage({
-      id: "t_Layouts",
-      defaultMessage: "Layouts",
-    }),
-    link: {
-      label: defineMessage({
-        id: "t_Layouts",
-        defaultMessage: "Layouts",
-      }),
-      title: defineMessage({
-        id: "page.layouts.description",
-        defaultMessage: "Comparison charts of keyboard layouts.",
-      }),
-      icon: mdiKeyboardOutline,
-    },
-    meta: [
-      ...meta,
-      {
-        name: "description",
-        content: defineMessage({
-          id: "page.layouts.description",
-          defaultMessage: "Comparison charts of keyboard layouts.",
+          defaultMessage:
+            "How Hangul Typing Trainer teaches Korean dubeolsik practice.",
         }),
       },
     ],

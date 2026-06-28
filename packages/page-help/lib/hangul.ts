@@ -1,0 +1,35 @@
+import { Letter } from "@keybr/phonetic-model";
+
+export const alphabet = {
+  ieung: new Letter(0x3147, 0.12, "ㅇ"),
+  nieun: new Letter(0x3134, 0.1, "ㄴ"),
+  a: new Letter(0x314f, 0.09, "ㅏ"),
+  giyeok: new Letter(0x3131, 0.08, "ㄱ"),
+  i: new Letter(0x3163, 0.075, "ㅣ"),
+  rieul: new Letter(0x3139, 0.07, "ㄹ"),
+  eu: new Letter(0x3161, 0.065, "ㅡ"),
+  eo: new Letter(0x3153, 0.06, "ㅓ"),
+  mieum: new Letter(0x3141, 0.055, "ㅁ"),
+  digeut: new Letter(0x3137, 0.05, "ㄷ"),
+  o: new Letter(0x3157, 0.045, "ㅗ"),
+  siot: new Letter(0x3145, 0.04, "ㅅ"),
+  u: new Letter(0x315c, 0.035, "ㅜ"),
+  bieup: new Letter(0x3142, 0.03, "ㅂ"),
+  jieut: new Letter(0x3148, 0.025, "ㅈ"),
+  hieut: new Letter(0x314e, 0.02, "ㅎ"),
+  ae: new Letter(0x3150, 0.018, "ㅐ"),
+  e: new Letter(0x3154, 0.016, "ㅔ"),
+  yeo: new Letter(0x3155, 0.014, "ㅕ"),
+  yo: new Letter(0x315b, 0.012, "ㅛ"),
+  yu: new Letter(0x3160, 0.01, "ㅠ"),
+  kieuk: new Letter(0x314b, 0.009, "ㅋ"),
+  tieut: new Letter(0x314c, 0.008, "ㅌ"),
+  pieup: new Letter(0x314d, 0.007, "ㅍ"),
+  ssangGiyeok: new Letter(0x3132, 0.006, "ㄲ"),
+  ssangDigeut: new Letter(0x3138, 0.005, "ㄸ"),
+  ssangBieup: new Letter(0x3143, 0.004, "ㅃ"),
+  ssangSiot: new Letter(0x3146, 0.003, "ㅆ"),
+  ssangJieut: new Letter(0x3149, 0.002, "ㅉ"),
+} as const;
+
+export const letters: readonly Letter[] = [...Object.values(alphabet)];

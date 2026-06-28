@@ -1,6 +1,6 @@
 import { LessonKey, LessonKeys } from "@keybr/lesson";
 import { Letter } from "@keybr/phonetic-model";
-import { letters } from "./english.ts";
+import { letters } from "./hangul.ts";
 
 export function makeExampleLesson(
   confidences: readonly (number | null)[],

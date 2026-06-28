@@ -1,18 +1,17 @@
 import { test } from "node:test";
 import { FakeIntlProvider } from "@keybr/intl";
-import { KeyboardOptions, Language } from "@keybr/keyboard";
+import { KeyboardOptions } from "@keybr/keyboard";
 import { lessonProps, LessonType } from "@keybr/lesson";
 import { FakePhoneticModel } from "@keybr/phonetic-model";
 import { PhoneticModelLoader } from "@keybr/phonetic-model-loader";
 import { FakeResultContext, ResultFaker } from "@keybr/result";
 import { FakeSettingsContext, Settings } from "@keybr/settings";
 import { render } from "@testing-library/react";
-import { includes, isNotNull } from "rich-assert";
+import { doesNotInclude, isNotNull } from "rich-assert";
 import { PracticeScreen } from "./PracticeScreen.tsx";
 
 const faker = new ResultFaker();
-const englishSettings = () =>
-  KeyboardOptions.default().withLanguage(Language.EN).save(new Settings());
+const koreanSettings = () => KeyboardOptions.default().save(new Settings());
 
 test("render", async () => {
   PhoneticModelLoader.loader = FakePhoneticModel.loader;
@@ -20,7 +19,7 @@ test("render", async () => {
   const r = render(
     <FakeIntlProvider>
       <FakeSettingsContext
-        initialSettings={englishSettings()
+        initialSettings={koreanSettings()
           .set(lessonProps.type, LessonType.CUSTOM)
           .set(lessonProps.customText.content, "abcdefghij")}
       >
@@ -32,7 +31,7 @@ test("render", async () => {
   );
 
   isNotNull(await r.findByTitle("Change lesson settings", { exact: false }));
-  includes(r.container.textContent!, "abcdefghij");
+  doesNotInclude(r.container.textContent!, "abcdefghij");
 
   r.unmount();
 });

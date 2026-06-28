@@ -14,7 +14,7 @@ import * as styles from "./NavMenu.module.less";
 import { SubMenu } from "./SubMenu.tsx";
 import { ThemeSwitcher } from "./themes/ThemeSwitcher.tsx";
 
-export function NavMenu({ currentPath }: { readonly currentPath: string }) {
+export function NavMenu(_props: { readonly currentPath?: string } = {}) {
   const { publicUser } = usePageData();
   return (
     <div className={styles.root}>
@@ -31,31 +31,11 @@ export function NavMenu({ currentPath }: { readonly currentPath: string }) {
       </MenuItem>
 
       <MenuItem>
-        <MenuItemLink page={Pages.profile} />
-      </MenuItem>
-
-      <MenuItem>
         <MenuItemLink page={Pages.help} />
       </MenuItem>
 
       <MenuItem>
-        <MenuItemLink page={Pages.highScores} />
-      </MenuItem>
-
-      <MenuItem>
-        <MenuItemLink page={Pages.multiplayer} />
-      </MenuItem>
-
-      <MenuItem>
-        <MenuItemLink page={Pages.typingTest} />
-      </MenuItem>
-
-      <MenuItem>
-        <MenuItemLink page={Pages.layouts} />
-      </MenuItem>
-
-      <MenuItem>
-        <SubMenu currentPath={currentPath} />
+        <SubMenu />
       </MenuItem>
     </div>
   );

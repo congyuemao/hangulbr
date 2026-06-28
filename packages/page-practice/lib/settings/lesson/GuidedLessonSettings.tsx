@@ -9,7 +9,6 @@ import { NaturalWordsProp } from "./NaturalWordsProp.tsx";
 import { RecoverKeysProp } from "./RecoverKeysProp.tsx";
 import { RepeatWordsProp } from "./RepeatWordsProp.tsx";
 import { TargetSpeedProp } from "./TargetSpeedProp.tsx";
-import { TextManglingProp } from "./TextManglingProp.tsx";
 
 export function GuidedLessonSettings({
   lesson,
@@ -23,7 +22,7 @@ export function GuidedLessonSettings({
         <Description>
           <FormattedMessage
             id="lessonType.guided.description"
-            defaultMessage="Generate typing lessons with random words using the phonetic rules of your language. The key set is expanded dynamically based on your performance. This mode is for the beginners."
+            defaultMessage="Generate adaptive Korean lessons from the current jamo set. The practice set expands dynamically based on your performance. This mode is for beginners."
           />
         </Description>
       </Explainer>
@@ -39,7 +38,6 @@ export function GuidedLessonSettings({
         <NaturalWordsProp />
         <RepeatWordsProp />
         <AlphabetSizeProp />
-        <TextManglingProp />
         <LessonLengthProp />
       </FieldSet>
     </>

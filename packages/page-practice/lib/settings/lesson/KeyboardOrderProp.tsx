@@ -20,7 +20,7 @@ export function KeyboardOrderProp(): ReactNode {
           <CheckBox
             label={formatMessage({
               id: "setting.keyboardOrder.label",
-              defaultMessage: "Sort letters in the order of keyboard keys",
+              defaultMessage: "Sort jamo in the order of keyboard keys",
             })}
             checked={settings.get(lessonProps.guided.keyboardOrder)}
             onChange={(value) => {
@@ -35,7 +35,7 @@ export function KeyboardOrderProp(): ReactNode {
         <Description>
           <FormattedMessage
             id="setting.keyboardOrder.description"
-            defaultMessage="Sort letters in such a way that the letters from the home row come first, then the letters from the top row, and finally all the remaining letters. Home row is the row with the CapsLock key. Top row is the row with the Tab key. It is easier and faster to type when your fingers do not need to move away from the home row. This feature works best with optimized layouts, like Dvorak or Colemak. In the Qwerty layout, the only vowel on the home row is A, so it severely limits the choice of words, and the algorithm will use more pseudo-words than usual."
+            defaultMessage="Sort jamo so that home-row keys come first, then top-row keys, and finally the remaining keys. This can make early dubeolsik lessons focus on positions that are easier to reach."
           />
         </Description>
       </Explainer>

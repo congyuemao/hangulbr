@@ -1,22 +1,16 @@
-import { loadContent } from "@keybr/content-books";
 import { loadWordList } from "@keybr/content-words";
 import { catchError } from "@keybr/debug";
 import { KeyboardOptions, useKeyboard } from "@keybr/keyboard";
 import {
-  BooksLesson,
-  CodeLesson,
-  CustomTextLesson,
   GuidedLesson,
   type Lesson,
   lessonProps,
   LessonType,
-  NumbersLesson,
-  WordListLesson,
 } from "@keybr/lesson";
 import { LoadingProgress } from "@keybr/pages-shared";
 import { type PhoneticModel } from "@keybr/phonetic-model";
 import { PhoneticModelLoader } from "@keybr/phonetic-model-loader";
-import { useSettings } from "@keybr/settings";
+import { type Settings, useSettings } from "@keybr/settings";
 import { type ReactNode, useEffect, useState } from "react";
 
 export function LessonLoader({
@@ -27,12 +21,17 @@ export function LessonLoader({
   readonly fallback?: ReactNode;
 }): ReactNode {
   const { settings } = useSettings();
-  const lessonType = settings.get(lessonProps.type);
-  const { language } = KeyboardOptions.from(settings);
+  const lessonSettings = guidedSettings(settings);
+  const { language } = KeyboardOptions.from(lessonSettings);
   return (
     <PhoneticModelLoader language={language}>
       {(model) => (
-        <Loader key={lessonType.id} model={model} fallback={fallback}>
+        <Loader
+          key={language.id}
+          model={model}
+          settings={lessonSettings}
+          fallback={fallback}
+        >
           {children}
         </Loader>
       )}
@@ -42,14 +41,16 @@ export function LessonLoader({
 
 function Loader({
   model,
+  settings,
   children,
   fallback,
 }: {
   readonly model: PhoneticModel;
+  readonly settings: Settings;
   readonly children: (result: Lesson) => ReactNode;
   readonly fallback?: ReactNode;
 }): ReactNode {
-  const result = useLoader(model);
+  const result = useLoader(model, settings);
   if (result == null) {
     return fallback;
   } else {
@@ -57,8 +58,7 @@ function Loader({
   }
 }
 
-function useLoader(model: PhoneticModel): Lesson | null {
-  const { settings } = useSettings();
+function useLoader(model: PhoneticModel, settings: Settings): Lesson | null {
   const keyboard = useKeyboard();
   const [result, setResult] = useState<Lesson | null>(null);
 
@@ -66,53 +66,10 @@ function useLoader(model: PhoneticModel): Lesson | null {
     let didCancel = false;
 
     const load = async (): Promise<void> => {
-      switch (settings.get(lessonProps.type)) {
-        case LessonType.GUIDED: {
-          const { language } = KeyboardOptions.from(settings);
-          const wordList = await loadWordList(language);
-          if (!didCancel) {
-            setResult(new GuidedLesson(settings, keyboard, model, wordList));
-          }
-          break;
-        }
-        case LessonType.WORDLIST: {
-          const { language } = KeyboardOptions.from(settings);
-          const wordList = await loadWordList(language);
-          if (!didCancel) {
-            setResult(new WordListLesson(settings, keyboard, model, wordList));
-          }
-          break;
-        }
-        case LessonType.BOOKS: {
-          const book = settings.get(lessonProps.books.book);
-          const content = await loadContent(book);
-          if (!didCancel) {
-            setResult(
-              new BooksLesson(settings, keyboard, model, { book, content }),
-            );
-          }
-          break;
-        }
-        case LessonType.CUSTOM: {
-          if (!didCancel) {
-            setResult(new CustomTextLesson(settings, keyboard, model));
-          }
-          break;
-        }
-        case LessonType.CODE: {
-          if (!didCancel) {
-            setResult(new CodeLesson(settings, keyboard, model));
-          }
-          break;
-        }
-        case LessonType.NUMBERS: {
-          if (!didCancel) {
-            setResult(new NumbersLesson(settings, keyboard, model));
-          }
-          break;
-        }
-        default:
-          throw new Error();
+      const { language } = KeyboardOptions.from(settings);
+      const wordList = await loadWordList(language);
+      if (!didCancel) {
+        setResult(new GuidedLesson(settings, keyboard, model, wordList));
       }
     };
 
@@ -124,4 +81,18 @@ function useLoader(model: PhoneticModel): Lesson | null {
   }, [settings, keyboard, model]);
 
   return result;
+}
+
+function guidedSettings(settings: Settings): Settings {
+  let nextSettings = settings;
+  if (nextSettings.get(lessonProps.type) !== LessonType.GUIDED) {
+    nextSettings = nextSettings.set(lessonProps.type, LessonType.GUIDED);
+  }
+  if (nextSettings.get(lessonProps.capitals) !== 0) {
+    nextSettings = nextSettings.set(lessonProps.capitals, 0);
+  }
+  if (nextSettings.get(lessonProps.punctuators) !== 0) {
+    nextSettings = nextSettings.set(lessonProps.punctuators, 0);
+  }
+  return nextSettings;
 }

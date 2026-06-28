@@ -32,8 +32,10 @@ test("render", () => {
     </PageDataContext.Provider>,
   );
 
-  isNotNull(r.queryByText("Polski"));
-  isNotNull(r.queryByText("English"));
+  isNotNull(r.queryByText("Github"));
+  isNotNull(r.queryByText("keybr.com"));
+  isNotNull(r.queryByText("Terms of Service"));
+  isNotNull(r.queryByText("Privacy Policy"));
 
   r.unmount();
 });

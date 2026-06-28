@@ -35,7 +35,7 @@ export function NaturalWordsProp(): ReactNode {
         <Description>
           <FormattedMessage
             id="settings.naturalWords.description"
-            defaultMessage="Use the dictionary words as much as possible, and if not many such words are available, then use computer-generated pseudo-words. Natural words might be easier to type. Pseudo-words offer a much greater variety of letter combinations. If this option is enabled, you will see more pseudo-words in the beginning, when the letter list is short. However, as you unlock few more letters, there is a good chance that only the dictionary words will be used."
+            defaultMessage="Use Korean dictionary words as much as possible, and fall back to generated practice items only when the active jamo set is still too small. Natural Korean words are usually easier to read, while generated items can cover more jamo combinations early in training."
           />
         </Description>
       </Explainer>

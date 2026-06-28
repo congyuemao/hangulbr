@@ -6,7 +6,6 @@
   "main": "lib/index.ts",
   "types": ".types/index.d.ts",
   "dependencies": {
-    "@keybr/content-books": "*",
     "@keybr/content-words": "*",
     "@keybr/debug": "*",
     "@keybr/keyboard": "*",
