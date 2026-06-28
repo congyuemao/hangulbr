@@ -1,27 +1,16 @@
-import {
-  type AnyUser,
-  Avatar,
-  type PageInfo,
-  Pages,
-  usePageData,
-} from "@keybr/pages-shared";
+import { type PageInfo, Pages } from "@keybr/pages-shared";
 import { Icon } from "@keybr/widget";
 import { clsx } from "clsx";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import * as styles from "./NavMenu.module.less";
 import { SubMenu } from "./SubMenu.tsx";
 import { ThemeSwitcher } from "./themes/ThemeSwitcher.tsx";
 
 export function NavMenu(_props: { readonly currentPath?: string } = {}) {
-  const { publicUser } = usePageData();
   return (
     <div className={styles.root}>
-      <MenuItem>
-        <AccountLink user={publicUser} />
-      </MenuItem>
-
       <MenuItem>
         <ThemeSwitcher />
       </MenuItem>
@@ -35,6 +24,10 @@ export function NavMenu(_props: { readonly currentPath?: string } = {}) {
       </MenuItem>
 
       <MenuItem>
+        <LanguageSwitcher />
+      </MenuItem>
+
+      <MenuItem>
         <SubMenu />
       </MenuItem>
     </div>
@@ -43,28 +36,6 @@ export function NavMenu(_props: { readonly currentPath?: string } = {}) {
 
 function MenuItem({ children }: { readonly children: ReactNode }) {
   return <div className={styles.item}>{children}</div>;
-}
-
-function AccountLink({ user }: { readonly user: AnyUser }) {
-  const { formatMessage } = useIntl();
-  return (
-    <NavLink
-      className={({ isActive }) =>
-        clsx(styles.accountLink, isActive && styles.isActive)
-      }
-      to={Pages.account.path}
-    >
-      <Avatar user={user.id != null ? user : null} size="large" />
-      <span className={styles.userName}>
-        {user.id != null
-          ? user.name
-          : formatMessage({
-              id: "t_Sing_In",
-              defaultMessage: "Sign-In",
-            })}
-      </span>
-    </NavLink>
-  );
 }
 
 function MenuItemLink({
@@ -87,5 +58,41 @@ function MenuItemLink({
       <Icon className={styles.icon} shape={icon ?? ""} />
       <span className={styles.label}>{formatMessage(label)}</span>
     </NavLink>
+  );
+}
+
+const languageLinks = [
+  { locale: "en", label: "English", title: "English" },
+  { locale: "zh-hans", label: "中文", title: "简体中文" },
+];
+
+function LanguageSwitcher() {
+  const { locale } = useIntl();
+  const { pathname, search, hash } = useLocation();
+  const path = pathname === "" ? "/" : pathname;
+
+  return (
+    <div className={styles.languageSwitcher} aria-label="Language">
+      {languageLinks.map(({ locale: targetLocale, label, title }) => {
+        const isActive =
+          targetLocale === "en" ? locale === "en" : locale.startsWith("zh");
+        return (
+          <a
+            key={targetLocale}
+            className={clsx(
+              styles.languageLink,
+              isActive && styles.isActive,
+            )}
+            href={`${Pages.intlPath(path, targetLocale)}${search}${hash}`}
+            hrefLang={targetLocale}
+            lang={targetLocale}
+            title={title}
+            aria-current={isActive ? "true" : undefined}
+          >
+            {label}
+          </a>
+        );
+      })}
+    </div>
   );
 }

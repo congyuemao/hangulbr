@@ -4,12 +4,12 @@
   "description": "Open-source Korean dubeolsik typing trainer derived from keybr.com.",
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/your-org/hangul-typing-trainer",
+  "homepage": "https://github.com/congyuemao/hangulbr",
   "license": "AGPL-3.0-only",
   "author": "Hangul Typing Trainer contributors",
   "repository": {
     "type": "git",
-    "url": "git@github.com:your-org/hangul-typing-trainer.git"
+    "url": "git@github.com:congyuemao/hangulbr.git"
   },
   "workspaces": [
     "packages/*",

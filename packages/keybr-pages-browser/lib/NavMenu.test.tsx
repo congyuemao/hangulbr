@@ -1,3 +1,4 @@
+import { equal } from "node:assert/strict";
 import { test } from "node:test";
 import { FakeIntlProvider, PreferredLocaleContext } from "@keybr/intl";
 import { PageDataContext } from "@keybr/pages-shared";
@@ -32,9 +33,11 @@ test("render", () => {
     </PageDataContext.Provider>,
   );
 
-  isNotNull(r.queryByText("userName"));
+  equal(r.queryByText("userName"), null);
   isNotNull(r.queryByText("Practice"));
   isNotNull(r.queryByText("Help"));
+  isNotNull(r.queryByText("English"));
+  isNotNull(r.queryByText("中文"));
   isNotNull(r.queryByText("keybr.com"));
 
   r.unmount();

@@ -24,7 +24,7 @@ function GithubLink() {
   const { formatMessage } = useIntl();
   return (
     <StaticLink
-      href="https://github.com/your-org/hangul-typing-trainer"
+      href="https://github.com/congyuemao/hangulbr"
       target="github"
       title={formatMessage({
         id: "footer.githubLink.description",

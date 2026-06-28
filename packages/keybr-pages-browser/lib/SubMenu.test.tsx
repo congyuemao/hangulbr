@@ -1,3 +1,4 @@
+import { equal } from "node:assert/strict";
 import { test } from "node:test";
 import { FakeIntlProvider, PreferredLocaleContext } from "@keybr/intl";
 import { PageDataContext } from "@keybr/pages-shared";
@@ -33,6 +34,10 @@ test("render", () => {
   );
 
   isNotNull(r.queryByText("Github"));
+  equal(
+    r.getByText("Github").getAttribute("href"),
+    "https://github.com/congyuemao/hangulbr",
+  );
   isNotNull(r.queryByText("keybr.com"));
   isNotNull(r.queryByText("Terms of Service"));
   isNotNull(r.queryByText("Privacy Policy"));

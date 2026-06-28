@@ -41,24 +41,31 @@
   margin-inline-start: 0.5rem;
 }
 
-.accountLink {
+.languageSwitcher {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-inline: 0;
-  padding-block: 1rem;
+  gap: 0.25rem;
+  padding-inline: 0.5rem;
+  padding-block: 0.5rem;
+}
+
+.languageLink {
+  .text-truncate();
+  flex: 1 1 0;
+  min-inline-size: 0;
+  block-size: 1.75rem;
+  padding-inline: 0.25rem;
+  border: var(--separator-border);
+  border-radius: 0.25rem;
   color: var(--text-color);
+  font-size: 0.75rem;
+  line-height: 1.75rem;
+  text-align: center;
   text-decoration: none;
 
   &.isActive {
     color: var(--text-color);
     background-color: var(--primary-l1);
   }
-}
-
-.userName {
-  .text-truncate();
-  max-inline-size: 8rem;
-  text-align: center;
 }
